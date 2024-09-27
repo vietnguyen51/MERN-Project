@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
-import { User, Users, ShoppingBag } from 'lucide-react'
+import { User, Users, ShoppingBag,ShoppingCart,ChartLine } from 'lucide-react'
 import ROLE from '../common/role'
 
 export default function AdminPanel() {
@@ -26,14 +26,28 @@ export default function AdminPanel() {
         </div>
         <div className="h-[calc(100vh-200px)] overflow-auto">
           <nav className="px-4 py-2">
+
             <Link to={"all-users"} className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded mb-1">
               <Users className="mr-2 h-4 w-4" />
               All Users
             </Link>
-            <Link to={"all-products"} className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">
+
+            <Link to={"all-products"} className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded mb-1">
               <ShoppingBag className="mr-2 h-4 w-4" />
               All Products
             </Link>
+
+             <Link to={"all-products"} className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded mb-1">
+              <ShoppingCart className="mr-2 h-4 w-4" />
+              Orders
+            </Link>
+
+            <Link to={"analytics"} className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">
+              <ChartLine className="mr-2 h-4 w-4" />
+              Analytics
+            </Link>
+            
+
           </nav>
         </div>
       </aside>

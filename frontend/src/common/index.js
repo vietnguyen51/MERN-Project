@@ -18,6 +18,14 @@ const SummaryApi = {
         url : `${backendDomin}/api/userLogout`,
         method : 'get'
     },
+     allUser : {
+        url : `${backendDomin}/api/all-users`,
+        method : 'get'
+    },
+     AllProducts : {
+        url : `${backendDomin}/api/all-products`,
+        method : 'get'
+    },
 }
 
 

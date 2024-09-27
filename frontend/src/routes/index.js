@@ -7,6 +7,8 @@ import SignUp from "../pages/SignUp";
 import AdminPanel from '../pages/AdminPanel'
 import AllUser from '../pages/AllUser'
 import AllProducts from '../pages/AllProducts'
+import Analytics from "../pages/Analytics";
+import Orders from "../pages/Orders";
 
 
 
@@ -47,6 +49,14 @@ const router = createBrowserRouter([
                     {
                         path : "all-products",
                         element : <AllProducts/>
+                    },
+                    {
+                        path : "orders",
+                        element : <Orders/>
+                    },
+                    {
+                        path : "analytics",
+                        element : <Analytics/>
                     },
                 ]      
         },
