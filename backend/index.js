@@ -1,27 +1,29 @@
-const express = require('express')
-const cors = require('cors')
-const cookieParser = require('cookie-parser')
-require('dotenv').config()
-const connectDB = require('./config/db')
-const router = require('./routes')
+const express = require('express');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+require('dotenv').config();
+const connectDB = require('./config/db');
+const router = require('./routes'); // Đường dẫn đúng tới file router
 
+const app = express();
 
-const app = express()
+// Thiết lập CORS
 app.use(cors({
-    origin : process.env.FRONTEND_URL,
-    credentials : true
+    origin: process.env.FRONTEND_URL,
+    credentials: true
 }));
-app.use(express.json())
-app.use(cookieParser())
 
-app.use("/api",router)
+app.use(express.json());
+app.use(cookieParser());
 
-const PORT = 8080 || process.env.PORT
+// Định nghĩa route API
+app.use("/api", router);
 
-
-connectDB().then(()=>{
-    app.listen(PORT,()=>{
-        console.log("connnect to DB")
-        console.log("Server is running "+PORT)
-    })
-})
+// Kết nối với MongoDB và khởi chạy server
+connectDB().then(() => {
+    const PORT = process.env.PORT || 8080;
+    app.listen(PORT, () => {
+        console.log("Connected to DB");
+        console.log("Server is running on port " + PORT);
+    });
+});
