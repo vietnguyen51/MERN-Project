@@ -88,26 +88,41 @@ const UploadProduct = ({ onClose, fetchData }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Form submit initiated.");
+    console.log("Form data: ", data);
 
-    const response = await fetch(SummaryApi.uploadProduct.url, {
-      method: SummaryApi.uploadProduct.method,
-      credentials: "include",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-
-    const responseData = await response.json();
-
-    if (responseData.success) {
-      toast.success(responseData?.message);
-      onClose();
-      fetchData();
+    if (isUploading) {
+      console.warn("Cannot submit while uploading images.");
+      toast.error("Please wait until the images finish uploading.");
+      return;
     }
 
-    if (responseData.error) {
-      toast.error(responseData?.message);
+    try {
+      console.log("Sending form data to server...");
+      const response = await fetch(SummaryApi.uploadProduct.url, {
+        method: SummaryApi.uploadProduct.method,
+        credentials: "include",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const responseData = await response.json();
+      console.log("Server response: ", responseData);
+
+      if (responseData.success) {
+        toast.success(responseData.message);
+        onClose();
+        fetchData();
+        console.log("Product uploaded successfully.");
+      } else {
+        toast.error(responseData.message);
+        console.error("Server returned an error: ", responseData.message);
+      }
+    } catch (error) {
+      toast.error("Failed to upload product.");
+      console.error("Error during product upload: ", error);
     }
   };
 

@@ -19,66 +19,30 @@ const UploadProduct = ({ onClose, fetchData }) => {
 
   const [openFullScreenImage, setOpenFullScreenImage] = useState(false);
   const [fullScreenImage, setFullScreenImage] = useState("");
-  const [isUploading, setIsUploading] = useState(false); // Theo dõi quá trình tải lên
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
-    console.log(`Field changed: ${name}, Value: ${value}`);
     setData({ ...data, [name]: value });
   };
-
   const handleUploadProduct = async (e) => {
-    const files = Array.from(e.target.files); // Lấy tất cả các file
-    console.log("Files selected: ", files);
-    if (files.length === 0) {
-      console.error("No files selected");
-      toast.error("No files selected.");
-      return;
-    }
+   const file = e.target.files[0];
+   if (!file || !file.type.startsWith("image/")) {
+     console.error("Invalid file type");
+     return;
+   }
 
-    const validExtensions = [
-      "image/jpeg",
-      "image/png",
-      "image/gif",
-      "image/webp",
-    ]; // Các định dạng hợp lệ
-    setIsUploading(true); // Bắt đầu quá trình tải lên
-    console.log("Uploading images...");
+    const uploadImageCloudinary = await uploadImage(file);
 
-    const uploadedImages = [];
-    for (let file of files) {
-      if (!validExtensions.includes(file.type)) {
-        console.error("Invalid file type:", file.type);
-        toast.error("Please upload only images (JPEG, PNG, GIF, WebP).");
-        continue; // Bỏ qua file không hợp lệ
-      }
-
-      try {
-        console.log("Uploading file to Cloudinary: ", file.name);
-        const uploadImageCloudinary = await uploadImage(file); // Tải ảnh lên Cloudinary
-        console.log("File uploaded: ", uploadImageCloudinary.url);
-        uploadedImages.push(uploadImageCloudinary.url);
-      } catch (error) {
-        console.error("Image upload failed:", error);
-        toast.error("Failed to upload image.");
-      }
-    }
-
-    if (uploadedImages.length > 0) {
-      console.log("Images uploaded successfully: ", uploadedImages);
-      setData((prev) => ({
-        ...prev,
-        productImage: [...prev.productImage, ...uploadedImages], // Cập nhật tất cả các ảnh hợp lệ
-      }));
-    }
-
-    setIsUploading(false); // Hoàn tất quá trình tải lên
-    console.log("Upload process finished.");
+    setData((preve) => {
+      return {
+        ...preve,
+        productImage: [...preve.productImage, uploadImageCloudinary.url],
+      };
+    });
   };
 
   const handleDeleteProductImage = (index) => {
     const newProductImages = [...data.productImage];
-    console.log("Deleting image at index: ", index);
     newProductImages.splice(index, 1);
     setData((prev) => ({
       ...prev,
@@ -88,26 +52,27 @@ const UploadProduct = ({ onClose, fetchData }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const response = await fetch(SummaryApi.uploadProduct.url, {
+        method: SummaryApi.uploadProduct.method,
+        credentials: "include",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-    const response = await fetch(SummaryApi.uploadProduct.url, {
-      method: SummaryApi.uploadProduct.method,
-      credentials: "include",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+      const responseData = await response.json();
 
-    const responseData = await response.json();
-
-    if (responseData.success) {
-      toast.success(responseData?.message);
-      onClose();
-      fetchData();
-    }
-
-    if (responseData.error) {
-      toast.error(responseData?.message);
+      if (responseData.success) {
+        toast.success(responseData.message);
+        onClose();
+        fetchData();
+      } else {
+        toast.error(responseData.message);
+      }
+    } catch (error) {
+      toast.error("Failed to upload product.");
     }
   };
 
@@ -147,6 +112,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
                 required
               />
             </div>
+
             <div>
               <label
                 htmlFor="genderCategory"
@@ -166,6 +132,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
                 <option value="women">Women</option>
               </select>
             </div>
+
             <div>
               <label
                 htmlFor="category"
@@ -188,6 +155,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
                 ))}
               </select>
             </div>
+
             <div>
               <label
                 htmlFor="uploadImageInput"
@@ -202,7 +170,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
                   className="hidden"
                   onChange={handleUploadProduct}
                   accept="image/*"
-                  multiple // Cho phép chọn nhiều file
+                  multiple
                 />
                 <label htmlFor="uploadImageInput" className="cursor-pointer">
                   <CloudUpload className="mx-auto h-12 w-12 text-gray-400" />
@@ -212,8 +180,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
                 </label>
               </div>
             </div>
-            {isUploading && <p>Uploading ...</p>}{" "}
-            {/* Hiển thị thông báo khi đang tải ảnh */}
+
             {data.productImage.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-2">
                 {data.productImage.map((el, index) => (
@@ -238,6 +205,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
                 ))}
               </div>
             )}
+
             <div>
               <label
                 htmlFor="price"
@@ -256,6 +224,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
                 required
               />
             </div>
+
             <div>
               <label
                 htmlFor="sellingPrice"
@@ -274,6 +243,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
                 required
               />
             </div>
+
             <div>
               <label
                 htmlFor="description"
@@ -291,6 +261,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black resize-none"
               />
             </div>
+
             <button
               type="submit"
               className="w-full bg-black text-white py-2 px-4 rounded-md hover:bg-gray-800 transition-colors"

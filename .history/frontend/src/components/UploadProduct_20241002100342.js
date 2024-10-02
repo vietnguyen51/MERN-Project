@@ -29,7 +29,6 @@ const UploadProduct = ({ onClose, fetchData }) => {
 
   const handleUploadProduct = async (e) => {
     const files = Array.from(e.target.files); // Lấy tất cả các file
-    console.log("Files selected: ", files);
     if (files.length === 0) {
       console.error("No files selected");
       toast.error("No files selected.");
@@ -56,6 +55,12 @@ const UploadProduct = ({ onClose, fetchData }) => {
       try {
         console.log("Uploading file to Cloudinary: ", file.name);
         const uploadImageCloudinary = await uploadImage(file); // Tải ảnh lên Cloudinary
+
+        // Kiểm tra nếu uploadImageCloudinary có chứa 'url'
+        if (!uploadImageCloudinary || !uploadImageCloudinary.url) {
+          throw new Error("Image upload failed, no URL returned.");
+        }
+
         console.log("File uploaded: ", uploadImageCloudinary.url);
         uploadedImages.push(uploadImageCloudinary.url);
       } catch (error) {
@@ -76,6 +81,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
     console.log("Upload process finished.");
   };
 
+
   const handleDeleteProductImage = (index) => {
     const newProductImages = [...data.productImage];
     console.log("Deleting image at index: ", index);
@@ -88,26 +94,41 @@ const UploadProduct = ({ onClose, fetchData }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Form submit initiated.");
+    console.log("Form data: ", data);
 
-    const response = await fetch(SummaryApi.uploadProduct.url, {
-      method: SummaryApi.uploadProduct.method,
-      credentials: "include",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-
-    const responseData = await response.json();
-
-    if (responseData.success) {
-      toast.success(responseData?.message);
-      onClose();
-      fetchData();
+    if (isUploading) {
+      console.warn("Cannot submit while uploading images.");
+      toast.error("Please wait until the images finish uploading.");
+      return;
     }
 
-    if (responseData.error) {
-      toast.error(responseData?.message);
+    try {
+      console.log("Sending form data to server...");
+      const response = await fetch(SummaryApi.uploadProduct.url, {
+        method: SummaryApi.uploadProduct.method,
+        credentials: "include",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const responseData = await response.json();
+      console.log("Server response: ", responseData);
+
+      if (responseData.success) {
+        toast.success(responseData.message);
+        onClose();
+        fetchData();
+        console.log("Product uploaded successfully.");
+      } else {
+        toast.error(responseData.message);
+        console.error("Server returned an error: ", responseData.message);
+      }
+    } catch (error) {
+      toast.error("Failed to upload product.");
+      console.error("Error during product upload: ", error);
     }
   };
 

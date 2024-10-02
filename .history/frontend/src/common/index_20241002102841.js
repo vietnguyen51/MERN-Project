@@ -30,7 +30,7 @@ const SummaryApi = {
     method: "post",
   },
   allProduct: {
-    url: `${backendDomin}/api/get-product`,
+    url: `${backendDomin}/api/upload-product`,
     method: "get",
   },
 };

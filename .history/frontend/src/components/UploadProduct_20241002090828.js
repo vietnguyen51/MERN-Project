@@ -23,62 +23,38 @@ const UploadProduct = ({ onClose, fetchData }) => {
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
-    console.log(`Field changed: ${name}, Value: ${value}`);
     setData({ ...data, [name]: value });
   };
 
   const handleUploadProduct = async (e) => {
     const files = Array.from(e.target.files); // Lấy tất cả các file
-    console.log("Files selected: ", files);
     if (files.length === 0) {
       console.error("No files selected");
-      toast.error("No files selected.");
       return;
     }
 
-    const validExtensions = [
-      "image/jpeg",
-      "image/png",
-      "image/gif",
-      "image/webp",
-    ]; // Các định dạng hợp lệ
     setIsUploading(true); // Bắt đầu quá trình tải lên
-    console.log("Uploading images...");
 
     const uploadedImages = [];
     for (let file of files) {
-      if (!validExtensions.includes(file.type)) {
-        console.error("Invalid file type:", file.type);
-        toast.error("Please upload only images (JPEG, PNG, GIF, WebP).");
-        continue; // Bỏ qua file không hợp lệ
+      if (!file.type.startsWith("image/")) {
+        console.error("Invalid file type");
+        continue;
       }
-
-      try {
-        console.log("Uploading file to Cloudinary: ", file.name);
-        const uploadImageCloudinary = await uploadImage(file); // Tải ảnh lên Cloudinary
-        console.log("File uploaded: ", uploadImageCloudinary.url);
-        uploadedImages.push(uploadImageCloudinary.url);
-      } catch (error) {
-        console.error("Image upload failed:", error);
-        toast.error("Failed to upload image.");
-      }
+      const uploadImageCloudinary = await uploadImage(file);
+      uploadedImages.push(uploadImageCloudinary.url);
     }
 
-    if (uploadedImages.length > 0) {
-      console.log("Images uploaded successfully: ", uploadedImages);
-      setData((prev) => ({
-        ...prev,
-        productImage: [...prev.productImage, ...uploadedImages], // Cập nhật tất cả các ảnh hợp lệ
-      }));
-    }
+    setData((prev) => ({
+      ...prev,
+      productImage: [...prev.productImage, ...uploadedImages], // Cập nhật tất cả các ảnh
+    }));
 
     setIsUploading(false); // Hoàn tất quá trình tải lên
-    console.log("Upload process finished.");
   };
 
   const handleDeleteProductImage = (index) => {
     const newProductImages = [...data.productImage];
-    console.log("Deleting image at index: ", index);
     newProductImages.splice(index, 1);
     setData((prev) => ({
       ...prev,
@@ -88,26 +64,27 @@ const UploadProduct = ({ onClose, fetchData }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const response = await fetch(SummaryApi.uploadProduct.url, {
+        method: SummaryApi.uploadProduct.method,
+        credentials: "include",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-    const response = await fetch(SummaryApi.uploadProduct.url, {
-      method: SummaryApi.uploadProduct.method,
-      credentials: "include",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+      const responseData = await response.json();
 
-    const responseData = await response.json();
-
-    if (responseData.success) {
-      toast.success(responseData?.message);
-      onClose();
-      fetchData();
-    }
-
-    if (responseData.error) {
-      toast.error(responseData?.message);
+      if (responseData.success) {
+        toast.success(responseData.message);
+        onClose();
+        fetchData();
+      } else {
+        toast.error(responseData.message);
+      }
+    } catch (error) {
+      toast.error("Failed to upload product.");
     }
   };
 
