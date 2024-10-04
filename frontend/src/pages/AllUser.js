@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 import SummaryApi from '../common/index';
 import { toast } from 'react-toastify';
 import { Edit2, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -102,7 +103,7 @@ const AllUsers = () => {
   );
 
   return (
-    <div className="bg-white shadow-md rounded-lg overflow-hidden">
+    <div className=" bg-white shadow-md rounded-lg ">
       <h2 className="text-2xl font-bold mb-6 px-6 pt-6">All Users</h2>
 
       {loading ? (

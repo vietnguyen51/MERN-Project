@@ -11,6 +11,8 @@ const allUsers = require("../controller/user/allUsers");
 const updateUser = require("../controller/user/updateUser");
 const UploadProductController = require("../controller/product/uploadProduct");
 const getProductController = require("../controller/product/getProduct");
+const updateProductController = require("../controller/product/updateProduct");
+const getCategoryProduct = require("../controller/product/getCategoryProduct");
 
 // Định nghĩa route cho signup, signin, và thông tin người dùng
 router.post("/signup", userSignUpController);
@@ -25,6 +27,8 @@ router.post("/update-user",authToken,updateUser)
 // Route cho upload sản phẩm
 router.post("/upload-product",authToken,UploadProductController)
 router.get("/get-product",getProductController)
+router.post("/update-product", authToken, updateProductController);
+router.get("/get-categoryProduct", getCategoryProduct);
 
 
 

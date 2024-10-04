@@ -87,29 +87,34 @@ const UploadProduct = ({ onClose, fetchData }) => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const response = await fetch(SummaryApi.uploadProduct.url, {
-      method: SummaryApi.uploadProduct.method,
-      credentials: "include",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+  const response = await fetch(SummaryApi.uploadProduct.url, {
+    method: SummaryApi.uploadProduct.method,
+    credentials: "include",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
 
-    const responseData = await response.json();
+  const responseData = await response.json();
 
-    if (responseData.success) {
-      toast.success(responseData?.message);
-      onClose();
-      fetchData();
+  if (responseData.success) {
+    toast.success(responseData?.message);
+    onClose();
+
+    // Kiểm tra fetchData có tồn tại trước khi gọi
+    if (typeof fetchData === "function") {
+      fetchData();  // Chỉ gọi nếu fetchData được truyền và là một hàm
     }
+  }
 
-    if (responseData.error) {
-      toast.error(responseData?.message);
-    }
-  };
+  if (responseData.error) {
+    toast.error(responseData?.message);
+  }
+};
+
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -162,6 +167,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
               >
                 <option value="">Select Gender Category</option>
+                <option value="all">All</option> 
                 <option value="men">Men</option>
                 <option value="women">Women</option>
               </select>
