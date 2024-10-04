@@ -1,0 +1,5 @@
+html, body {
+  height: 100%;
+  overflow-x: hidden; /* Ngăn cuộn ngang */
+  margin: 0;
+}
