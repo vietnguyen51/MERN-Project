@@ -1,0 +1,87 @@
+/* HomeBanner.css */
+
+/* Container cho hiệu ứng cuộn */
+.scroll-container {
+  position: relative;
+  height: 200vh; /* Đủ chiều cao để cuộn từ banner 1 sang banner 2 */
+  overflow: hidden;
+}
+
+/* Banner 1 */
+.home-banner-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Banner sẽ chiếm toàn bộ chiều cao viewport */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: transform 0.5s ease-out;
+}
+
+.home-banner-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.home-banner-caption {
+  position: absolute;
+  bottom: 50px;
+  text-align: center;
+}
+
+.session-collection,
+.discover-product {
+  margin: 0;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+/* Banner 2 */
+.banner-2-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Banner 2 chiếm toàn bộ chiều cao viewport */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner-2-desktop {
+  display: flex;
+  justify-content: space-between;
+}
+
+.banner-2-mobile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.banner-2-image {
+  width: 48%; /* Hiển thị 2 ảnh cạnh nhau trên desktop */
+  height: auto;
+  object-fit: cover;
+  margin: 0 1%;
+}
+
+/* Đặt chiều cao banner 1 trên mobile là 93vh */
+@media (max-width: 768px) {
+  .home-banner-container {
+    height: 93vh; /* Thiết lập chiều cao cho mobile */
+  }
+
+  .banner-2-desktop {
+    display: none; /* Ẩn 2 ảnh trên mobile */
+  }
+
+  .banner-2-mobile {
+    display: flex; /* Hiển thị từng ảnh trên mobile */
+  }
+
+  .banner-2-image {
+    width: 100%; /* Chiếm toàn bộ chiều rộng trên mobile */
+    margin: 0;
+  }
+}

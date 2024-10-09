@@ -1,5 +1,4 @@
 const express = require('express');
-
 const router = express.Router();
 
 const userSignUpController = require("../controller/user/userSignUp");
@@ -9,10 +8,13 @@ const authToken = require("../middleware/authToken");
 const userLogout = require("../controller/user/userLogout");
 const allUsers = require("../controller/user/allUsers");
 const updateUser = require("../controller/user/updateUser");
+
 const UploadProductController = require("../controller/product/uploadProduct");
-const getProductController = require("../controller/product/getProduct");
+const getMenProductsController = require('../controller/product/getMenProductsController');
+const getWomenProductsController = require('../controller/product/getWomenProductController');
+const getAllProductsController = require('../controller/product/getProduct');
 const updateProductController = require("../controller/product/updateProduct");
-const getCategoryProduct = require("../controller/product/getCategoryProduct");
+const getProductDetails = require('../controller/product/getProductDetails');
 
 // Định nghĩa route cho signup, signin, và thông tin người dùng
 router.post("/signup", userSignUpController);
@@ -20,29 +22,26 @@ router.post("/signin", userSignInController);
 router.get("/user-details", authToken, userDetailsController);
 router.get("/userLogout", userLogout);
 
-// Routes cho admin-panel
-router.get("/all-users",authToken,allUsers)
-router.post("/update-user",authToken,updateUser)
+// Routes cho admin-panel (cần xác thực authToken)
+router.get("/all-users", authToken, allUsers);
+router.post("/update-user", authToken, updateUser);
 
-// Route cho upload sản phẩm
-router.post("/upload-product",authToken,UploadProductController)
-router.get("/get-product",getProductController)
+// Route để upload sản phẩm (yêu cầu xác thực authToken)
+router.post("/upload-product", authToken, UploadProductController);
+
+// Route để lấy tất cả sản phẩm
+router.get("/get-product", getAllProductsController);
+
+// Route để cập nhật sản phẩm (yêu cầu xác thực authToken)
 router.post("/update-product", authToken, updateProductController);
-router.get("/get-categoryProduct", getCategoryProduct);
 
+// Route để lấy sản phẩm dành cho Men
+router.get('/men-products', getMenProductsController);
 
+// Route để lấy sản phẩm dành cho Women
+router.get('/women-products', getWomenProductsController);
 
-
-
-
-
-
-
-
-
-
-
-
-
+// Route để lấy chi tiết sản phẩm theo ID (GET method)
+router.get("/product-details/:productId", getProductDetails);
 
 module.exports = router;

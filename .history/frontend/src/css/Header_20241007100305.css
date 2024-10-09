@@ -1,0 +1,62 @@
+/* Header luôn nằm trên cùng, trong suốt */
+header {
+  background-color: transparent; /* Nền trong suốt */
+  position: fixed; /* Giữ header luôn ở trên cùng của trang */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  padding: 16px 0;
+  transition: background-color 0.3s ease;
+}
+
+header.scrolled {
+  background-color: rgba(0, 0, 0, 0.7); /* Nền đen mờ khi cuộn */
+}
+
+/* Đảm bảo các phần tử trong header có đủ không gian */
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* Phần navigation sẽ nằm ở bên trái */
+nav {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-start;
+}
+
+/* Phần logo sẽ nằm ở giữa */
+.text-center {
+  text-align: center;
+  flex-grow: 1;
+}
+
+@media (max-width: 768px) {
+  nav {
+    display: none; /* Ẩn navigation trên mobile */
+  }
+
+  .text-center {
+    flex-grow: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Điều chỉnh lại nút menu cho mobile */
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}

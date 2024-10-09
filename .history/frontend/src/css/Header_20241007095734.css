@@ -1,0 +1,41 @@
+/* Header luôn nằm trên cùng, trong suốt */
+header {
+  background-color: transparent; /* Nền trong suốt */
+  position: fixed; /* Đảm bảo header luôn ở trên cùng của trang */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100; /* Đảm bảo header nổi trên banner */
+  padding: 16px 0;
+  transition: background-color 0.3s ease; /* Hiệu ứng chuyển nền */
+}
+
+header.scrolled {
+  background-color: rgba(0, 0, 0, 0.7); /* Nền mờ khi cuộn */
+}
+
+/* Đảm bảo các phần tử trong header có đủ không gian */
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+nav {
+  display: flex;
+  gap: 16px;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}

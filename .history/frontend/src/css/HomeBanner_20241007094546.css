@@ -1,0 +1,67 @@
+/* File: /Users/sakai/Documents/GitHub/MERN-Project/frontend/src/components/HomeBanner.css */
+
+.home-banner-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: 100vh;  
+  max-width: 1556px;
+  margin: 0 auto;
+}
+/* File: /Users/sakai/Documents/GitHub/MERN-Project/frontend/src/components/HomeBanner.css */
+
+.home-banner-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Đảm bảo ảnh bao phủ toàn bộ chiều cao màn hình */
+  margin: 0;
+  overflow: hidden; /* Đảm bảo không có phần tử nào bị tràn ra ngoài */
+}
+
+.home-banner-image {
+  width: 100%;
+  height: 100%; /* Đảm bảo hình ảnh bao phủ toàn bộ chiều cao container */
+  object-fit: cover; /* Đảm bảo hình ảnh không bị méo khi thay đổi kích thước */
+}
+
+.home-banner-caption {
+  position: absolute;
+  bottom: 50px; /* Căn chỉnh gần đáy màn hình */
+  left: 50%; /* Căn giữa theo chiều ngang */
+  transform: translateX(-50%); /* Căn giữa nội dung */
+  color: white; /* Màu chữ */
+  background-color: transparent; /* Nền trong suốt */
+  padding: 10px 20px;
+  font-size: 18px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+h2, h3 {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.home-banner-container a {
+  text-decoration: none;
+  color: white; /* Đảm bảo liên kết có màu trắng */
+}
+
+.home-banner-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.home-banner-caption {
+  position: absolute;
+  bottom: 100px; /* Đặt gần dưới cùng */
+  left: 50%; /* Căn giữa theo chiều ngang */
+  transform: translateX(-50%); /* Căn giữa theo chiều ngang */
+  color: white; /* Màu chữ */
+  background-color: transparent; /* Làm nền trong suốt */
+  padding: 10px 20px;
+  font-size: 18px;
+  text-align: center;
+  border-radius: 5px;
+}

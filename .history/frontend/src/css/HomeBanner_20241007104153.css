@@ -1,0 +1,85 @@
+/* HomeBanner.css */
+
+.scroll-container {
+  position: relative;
+  height: 300vh; /* Đủ chiều cao để cuộn từ banner 1 sang banner 2 */
+  overflow: hidden;
+}
+
+.home-banner-container {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 93vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+  overflow: hidden;
+}
+
+.banner-2-container {
+  position: absolute;
+  top: 100vh; /* Đặt bên dưới banner 1 */
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+  overflow: hidden;
+}
+
+.banner-2-desktop {
+  display: flex;
+  justify-content: space-between;
+}
+
+.banner-2-mobile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.banner-2-image {
+  width: 48%; /* Hiển thị 2 ảnh cạnh nhau trên desktop */
+  height: auto;
+  object-fit: cover;
+  margin: 0 1%;
+}
+
+.home-banner-image {
+  width: 100%;
+  height: 93vh;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+}
+
+.home-banner-caption {
+  position: absolute;
+  bottom: 50px;
+  text-align: center;
+}
+
+.session-collection,
+.discover-product {
+  margin: 0;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+@media (max-width: 768px) {
+  .banner-2-desktop {
+    display: none; /* Ẩn 2 ảnh trên mobile */
+  }
+
+  .banner-2-mobile {
+    display: flex; /* Hiển thị từng ảnh trên mobile */
+  }
+
+  .banner-2-image {
+    width: 100%; /* Chiếm toàn bộ chiều rộng trên mobile */
+    margin: 0;
+  }
+}

@@ -12,7 +12,7 @@ function Footer() {
             <ul className="space-y-2">
               <li><Link to="/contact" className="text-sm hover:underline">Contact Us</Link></li>
               <li><Link to="/shipping-returns" className="text-sm hover:underline">Shipping & Returns</Link></li>
-              <li><Link to="/track-order" className="text-sm hover:underline">Track Your Order</Link></li>
+              <li><Link to="/cart" className="text-sm hover:underline">Track Your Order</Link></li>
             </ul>
           </div>
 

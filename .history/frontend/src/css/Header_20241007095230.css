@@ -1,0 +1,41 @@
+/* File: /Users/sakai/Documents/GitHub/MERN-Project/frontend/src/components/HomeBanner.css */
+
+header {
+  background-color: transparent; /* Nền trong suốt */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50; /* Giữ header trên cùng */
+  padding: 16px 0;
+  transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu */
+}
+
+header.scrolled {
+  background-color: rgba(0, 0, 0, 0.7); /* Nền đen mờ khi cuộn */
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+nav {
+  display: flex;
+  gap: 16px;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}

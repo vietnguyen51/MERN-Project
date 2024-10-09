@@ -1,0 +1,101 @@
+/* File: /Users/sakai/Documents/GitHub/MERN-Project/frontend/src/components/HomeBanner.css */
+
+.home-banner-container {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 64px); /* Chiều cao toàn màn hình trừ đi chiều cao của header (64px) */
+  margin: 0;
+  overflow: hidden;
+}
+
+.home-banner-image {
+  width: 100%;
+  height: 100%; /* Đảm bảo hình ảnh bao phủ toàn bộ chiều cao container */
+  object-fit: cover; /* Đảm bảo hình ảnh không bị méo khi thay đổi kích thước */
+}
+
+.home-banner-caption {
+  position: absolute;
+  bottom: 50px; /* Căn chỉnh gần đáy màn hình */
+  left: 50%; /* Căn giữa theo chiều ngang */
+  transform: translateX(-50%); /* Căn giữa nội dung */
+  color: white; /* Màu chữ */
+  background-color: transparent; /* Nền trong suốt */
+  padding: 10px 20px;
+  font-size: 18px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.session-collection {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0px;
+  line-height: 1rem;
+  min-height: 1rem;
+  text-align: center;
+  transition: color 0.25s linear;
+}
+
+.discover-product {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0px;
+  line-height: 1rem;
+  min-height: 1rem;
+  text-align: center;
+}
+
+.banner-2 {
+  width: 100%;
+  height: auto;
+}
+
+/* Cấu hình responsive cho banner 2 */
+@media (max-width: 768px) {
+  .banner-2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .home-banner-image {
+    object-fit: cover;
+    height: calc(100vh - 64px); /* Chiều cao màn hình trên mobile */
+  }
+}
+
+/* Scroll snap cho các banner */
+.scroll-container {
+  height: 300vh;
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+.snap-section {
+  height: calc(100vh - 64px); /* Trừ chiều cao header */
+  scroll-snap-align: start;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner-2-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 769px) {
+  .banner-2-desktop {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .banner-2-image {
+    width: 50%;
+  }
+}

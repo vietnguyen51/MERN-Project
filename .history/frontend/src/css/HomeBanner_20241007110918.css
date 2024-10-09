@@ -1,0 +1,87 @@
+/* File: /Users/sakai/Documents/GitHub/MERN-Project/frontend/src/components/HomeBanner.css */
+
+.home-banner-container {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 64px); /* Chiều cao toàn màn hình trừ đi chiều cao của header (64px) */
+  margin: 0;
+  overflow: hidden;
+}
+
+.home-banner-image {
+  width: 100%;
+  height: 100%; /* Đảm bảo hình ảnh bao phủ toàn bộ chiều cao container */
+  object-fit: cover; /* Đảm bảo hình ảnh không bị méo khi thay đổi kích thước */
+}
+
+.home-banner-caption {
+  position: absolute;
+  bottom: 50px; /* Căn chỉnh gần đáy màn hình */
+  left: 50%; /* Căn giữa theo chiều ngang */
+  transform: translateX(-50%); /* Căn giữa nội dung */
+  color: white; /* Màu chữ */
+  background-color: transparent; /* Nền trong suốt */
+  padding: 10px 20px;
+  font-size: 18px;
+  text-align: center;
+  border-radius: 5px;
+}
+.session-colection {
+    --title-hover-color: inherit;
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0px;
+    line-height: 1rem;
+    min-height: 1rem;
+    -webkit-font-smoothing: antialiased;
+    text-align: center;
+    transition: color 0.25s linear;
+}
+.discover-products {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0px;
+    line-height: 1rem;
+    min-height: 1rem;
+    -webkit-font-smoothing: antialiased;
+    text-align: center;
+}
+.banner-2{
+    width: 100%;
+    height: auto;
+}
+.banner-2-desktop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0; /* Tạo khoảng cách giữa hình ảnh */
+}
+
+.banner-2-desktop .col-6 {
+  padding: 0 15px; /* Căn chỉnh khoảng cách giữa các hình ảnh */
+}
+
+.banner-2-image {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.image-caption {
+  margin-top: 10px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.image-caption h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.image-caption p {
+  font-size: 1rem;
+  color: #555;
+}

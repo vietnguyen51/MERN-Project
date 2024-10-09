@@ -1,0 +1,36 @@
+/* HomeBanner CSS */
+.home-banner-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Đảm bảo banner chiếm toàn bộ chiều cao màn hình */
+  margin: 0;
+  overflow: hidden;
+}
+
+.home-banner-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Giữ đúng tỷ lệ hình ảnh và bao phủ toàn bộ không gian */
+  position: relative;
+  z-index: 1; /* Đặt z-index thấp hơn header */
+}
+
+.home-banner-caption {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  text-align: center;
+  z-index: 2; /* Đảm bảo caption hiển thị trên hình ảnh */
+}
+
+.session-colection, .discover-product {
+  margin: 0;
+  padding: 0;
+}
+
+h2, h3 {
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Tạo bóng cho chữ để dễ đọc hơn trên nền hình */
+}

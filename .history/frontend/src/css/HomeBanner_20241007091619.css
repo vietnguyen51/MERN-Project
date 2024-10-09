@@ -1,0 +1,18 @@
+/* File: /Users/sakai/Documents/GitHub/MERN-Project/frontend/src/components/HomeBanner.css */
+
+/* Default styles for desktop and wide screens (16:9) */
+.home-banner-image {
+  width: 100%;
+  height: auto;
+  max-width: 1556px; /* This limits the image width */
+  display: block;
+  margin: 0 auto; /* Center the image */
+}
+
+/* For mobile screens, set the image to be responsive */
+@media only screen and (max-width: 768px) {
+  .home-banner-image {
+    width: 100%; /* Full width of the mobile screen */
+    height: auto; /* Maintain aspect ratio */
+  }
+}

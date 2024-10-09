@@ -1,45 +1,51 @@
-
-const backendDomin = "http://localhost:8080";
-
+const backendDomain = "http://localhost:8080";
 const SummaryApi = {
   signUP: {
-    url: `${backendDomin}/api/signup`,
+    url: `${backendDomain}/api/signup`,
     method: "post",
   },
   signIn: {
-    url: `${backendDomin}/api/signin`,
+    url: `${backendDomain}/api/signin`,
     method: "post",
   },
   current_user: {
-    url: `${backendDomin}/api/user-details`,
+    url: `${backendDomain}/api/user-details`,
     method: "get",
   },
   logout_user: {
-    url: `${backendDomin}/api/userLogout`,
+    url: `${backendDomain}/api/userLogout`,
     method: "get",
   },
   allUser: {
-    url: `${backendDomin}/api/all-users`,
+    url: `${backendDomain}/api/all-users`,
     method: "get",
   },
   updateUser: {
-    url: `${backendDomin}/api/update-user`,
+    url: `${backendDomain}/api/update-user`,
     method: "post",
   },
   uploadProduct: {
-    url: `${backendDomin}/api/upload-product`,
+    url: `${backendDomain}/api/upload-product`,
     method: "post",
   },
   allProduct: {
-    url: `${backendDomin}/api/get-product`,
+    url: `${backendDomain}/api/get-product`,
     method: "get",
   },
   updateProduct: {
-    url: `${backendDomin}/api/update-product`,
+    url: `${backendDomain}/api/update-product`,
     method: "post",
   },
-  CategoryProduct: {
-    url: `${backendDomin}/api/get-categoryProduct`,
+  menProduct: {
+    url: `${backendDomain}/api/men-products`,
+    method: "get",
+  },
+  womenProduct: {
+    url: `${backendDomain}/api/women-products`,
+    method: "get",
+  },
+  productDetails: {
+    url: `${backendDomain}/api/product-details`,
     method: "get",
   },
 };

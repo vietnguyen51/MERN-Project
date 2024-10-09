@@ -1,14 +1,15 @@
 const productModel = require("../../models/productModel");
 
-const getProductController = async (req, res) => {
+const getAllProductsController = async (req, res) => {
   try {
-    const allProduct = await productModel.find().sort({ createdAt: -1 });
+    // Lấy tất cả sản phẩm
+    const allProducts = await productModel.find().sort({ createdAt: -1 });
 
     res.json({
-      message: "All Product",
+      message: "All Products fetched successfully",
       success: true,
       error: false,
-      data: allProduct,
+      data: allProducts,
     });
   } catch (err) {
     res.status(400).json({
@@ -19,4 +20,4 @@ const getProductController = async (req, res) => {
   }
 };
 
-module.exports = getProductController;
+module.exports = getAllProductsController;

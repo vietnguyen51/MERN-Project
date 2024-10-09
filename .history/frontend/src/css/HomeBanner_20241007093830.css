@@ -1,0 +1,28 @@
+/* File: /Users/sakai/Documents/GitHub/MERN-Project/frontend/src/components/HomeBanner.css */
+
+.home-banner-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 1556px;
+  margin: 0 auto;
+}
+
+.home-banner-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.home-banner-caption {
+  position: absolute;
+  bottom: 10px; /* Đặt gần dưới cùng */
+  left: 50%; /* Căn giữa theo chiều ngang */
+  transform: translateX(-50%); /* Căn giữa theo chiều ngang */
+  color: white; /* Màu chữ */
+  background-color: transparent; /* Làm nền trong suốt */
+  padding: 10px 20px;
+  font-size: 18px;
+  text-align: center;
+  border-radius: 5px;
+}
