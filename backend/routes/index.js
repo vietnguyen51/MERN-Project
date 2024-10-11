@@ -15,6 +15,10 @@ const getWomenProductsController = require('../controller/product/getWomenProduc
 const getAllProductsController = require('../controller/product/getProduct');
 const updateProductController = require("../controller/product/updateProduct");
 const getProductDetails = require('../controller/product/getProductDetails');
+const createOrder = require('../controller/product/Order');
+const getAllOrders = require("../controller/product/getOrders");
+const updateOrderStatus = require('../controller/product/updateOrderStatus'); // Sửa cú pháp lỗi
+
 
 // Định nghĩa route cho signup, signin, và thông tin người dùng
 router.post("/signup", userSignUpController);
@@ -43,5 +47,14 @@ router.get('/women-products', getWomenProductsController);
 
 // Route để lấy chi tiết sản phẩm theo ID (GET method)
 router.get("/product-details/:productId", getProductDetails);
+
+// Route để tạo đơn hàng
+router.post('/create-order', createOrder);
+
+// Route để lấy tất cả đơn hàng
+router.get('/orders', getAllOrders);
+
+// Route để cập nhật trạng thái đơn hàng (yêu cầu PATCH)
+router.patch('/orders/:orderId/status', updateOrderStatus);  // Đảm bảo controller updateOrderStatus được gọi đúng
 
 module.exports = router;

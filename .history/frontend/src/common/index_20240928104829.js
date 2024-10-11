@@ -25,6 +25,14 @@ const SummaryApi = {
         url : `${backendDomin}/api/update-user`,
         method : "post"
     },
+    getAllOrders: {
+        url: `${backendDomin}/api/orders`,
+        method: "get"
+    },
+    updateOrderStatus: (orderId) => ({
+        url: `${backendDomin}/api/orders/${orderId}/status`,
+        method: "patch"
+    }),
 }
 
 export default SummaryApi;

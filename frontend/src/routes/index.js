@@ -8,7 +8,7 @@ import AdminPanel from "../pages/AdminPanel";
 import AllUser from "../pages/AllUser";
 import AllProducts from "../pages/AllProducts"; // Trang hiển thị tất cả sản phẩm
 import Analytics from "../pages/Analytics";
-import Orders from "../pages/Orders";
+import Orders from "../pages/OrdersPage";
 import Cart from "../pages/Cart";
 import Gifts from "../pages/Gifts";
 import Men from "../pages/Men"; // Trang hiển thị sản phẩm Men

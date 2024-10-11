@@ -1,4 +1,5 @@
 const backendDomain = "http://localhost:8080";
+
 const SummaryApi = {
   signUP: {
     url: `${backendDomain}/api/signup`,
@@ -48,6 +49,16 @@ const SummaryApi = {
     url: `${backendDomain}/api/product-details`,
     method: "get",
   },
+  // Thêm API để tạo đơn hàng
+  createOrder: {
+    url: `${backendDomain}/api/create-order`,
+    method: "post",
+  },
+  getAllOrders: {
+    url: `${backendDomain}/api/orders`,
+    method: "get",
+  },
+
 };
 
 export default SummaryApi;
