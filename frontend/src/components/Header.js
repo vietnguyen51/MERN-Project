@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Menu, X, Search, ShoppingBag, User, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,25 +7,40 @@ import SearchDropdown from "./SearchDropdown";
 import SummaryApi from "../common/index";
 import { toast } from "react-toastify";
 import { setUserDetails } from "../store/userSlice";
-import { resetCart } from "../store/cartSlice"; // Thêm resetCart từ cartSlice
+import { resetCart } from "../store/cartSlice";
 import ROLE from "../common/role";
 
 export default function Header() {
   const user = useSelector((state) => state.user?.user);
   const cartItems = useSelector((state) => state.cart?.items || []);
-  const cartItemsCount = cartItems.reduce((total, item) => total + item.quantity, 0); // Tính tổng số lượng sản phẩm
+  const cartItemsCount = cartItems.reduce((total, item) => total + item.quantity, 0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const toggleSearch = () => setIsSearchOpen((prev) => !prev);
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
   const toggleUserMenu = () => setIsUserMenuOpen((prev) => !prev);
 
-  // Xử lý logout, xóa user và reset giỏ hàng
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 0;
+      if (isScrolled !== scrolled) {
+        setScrolled(isScrolled);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [scrolled]);
+
   const handleLogout = async () => {
     const fetchData = await fetch(SummaryApi.logout_user.url, {
       method: SummaryApi.logout_user.method,
@@ -36,11 +51,8 @@ export default function Header() {
 
     if (data.success) {
       toast.success(data.message);
-
-      // Xóa thông tin người dùng và giỏ hàng
       dispatch(setUserDetails(null));
-      dispatch(resetCart());  // Reset giỏ hàng khi logout
-
+      dispatch(resetCart());
       navigate("/");
     }
 
@@ -53,11 +65,15 @@ export default function Header() {
       <header className="bg-black text-white relative">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <button
-              className="lg:hidden z-50 fixed top-4 left-4"
+              className="lg:hidden z-50 fixed top-4 left-4 transition-colors duration-300"
               onClick={toggleMenu}
               aria-label="Toggle menu"
           >
-            {isMenuOpen ? <X color="black" size={24} /> : <Menu size={24} />}
+            {isMenuOpen ? (
+                <X color={"black" } size={24} />
+            ) : (
+                <Menu color={scrolled ? "black" : "white"} size={24} />
+            )}
           </button>
 
           <div className="text-center lg:text-left flex-grow lg:flex-grow-0">
@@ -80,7 +96,6 @@ export default function Header() {
               <Search size={20} />
             </button>
 
-            {/* Giỏ hàng với số lượng sản phẩm */}
             <Link to="/cart" aria-label="Shopping bag" className="relative">
               <ShoppingBag size={20} />
               {cartItemsCount > 0 && (
@@ -137,7 +152,6 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Menu cho màn hình nhỏ */}
         <div
             className={`fixed inset-0 bg-slate-50 text-black z-40 transform transition-transform duration-300 ease-in-out ${
                 isMenuOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"

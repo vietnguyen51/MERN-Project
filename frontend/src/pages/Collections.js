@@ -1,11 +1,14 @@
-import React from 'react'
+import React from 'react';
+import Men from './Men';
+import Women from './Women';
 
 const Collections = () => {
-  return (
-    <div>
-      <h1>Hello</h1>
-    </div>
-  )
-}
+    return (
+        <div>
+            <Men />
+            <Women />
+        </div>
+    );
+};
 
-export default Collections
+export default Collections;
