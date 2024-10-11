@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { CreditCard, Truck, Check, ChevronRight } from 'lucide-react';
@@ -19,6 +19,14 @@ export default function Checkout() {
     const cartItems = useSelector((state) => state.cart.items);
     const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
     const navigate = useNavigate();
+
+    // Redirect to cart page if the cart is empty
+    useEffect(() => {
+        if (cartItems.length === 0) {
+            toast.error("Your cart is empty! Please add items to proceed.");
+            navigate('/cart'); // Điều hướng về trang giỏ hàng
+        }
+    }, [cartItems, navigate]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
