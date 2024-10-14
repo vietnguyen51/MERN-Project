@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { PayPalButtons } from "@paypal/react-paypal-js";
+import { useSelector, useDispatch } from 'react-redux';
 import { CreditCard, Truck, Check, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import SummaryApi from '../common/index'; // Import API configuration
+import SummaryApi from '../common/index';
+import { resetCart } from '../store/cartSlice'; // Import action resetCart
 
 export default function Checkout() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const [paymentMethod, setPaymentMethod] = useState('cod');
     const [orderPlaced, setOrderPlaced] = useState(false);
     const [shippingAddress, setShippingAddress] = useState({
@@ -18,13 +21,9 @@ export default function Checkout() {
 
     const cartItems = useSelector((state) => state.cart.items);
     const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-    const navigate = useNavigate();
 
-    // Redirect to cart page if the cart is empty
     useEffect(() => {
         if (cartItems.length === 0) {
-            toast.error("Your cart is empty! Please add items to proceed.");
-            navigate('/cart'); // Điều hướng về trang giỏ hàng
         }
     }, [cartItems, navigate]);
 
@@ -36,7 +35,6 @@ export default function Checkout() {
     const handleCheckout = async (e) => {
         e.preventDefault();
 
-        // Kiểm tra thông tin giao hàng
         if (!shippingAddress.fullName || !shippingAddress.phoneNumber || !shippingAddress.address || !shippingAddress.city) {
             toast.error('Please fill in all the shipping details');
             return;
@@ -49,7 +47,7 @@ export default function Checkout() {
             city: shippingAddress.city,
             paymentMethod,
             items: cartItems.map(item => ({
-                productId: item.id, // Ensure this is correct and passed correctly
+                productId: item.id,
                 productName: item.productName,
                 quantity: item.quantity,
                 price: item.price,
@@ -64,23 +62,42 @@ export default function Checkout() {
             };
 
             if (token) {
-                headers['Authorization'] = `Bearer ${token}`;
+                headers['Authorization'] = `Bearer ${token}`; // Sửa lại cách gán token
             }
 
-            const response = await fetch(SummaryApi.createOrder.url, {
-                method: SummaryApi.createOrder.method,
-                headers,
-                body: JSON.stringify(orderData),
-            });
+            // Nếu thanh toán qua PayPal
+            if (paymentMethod === 'paypal') {
+                const response = await fetch(SummaryApi.createPaypalOrder.url, {
+                    method: "post",
+                    headers,
+                    body: JSON.stringify({ totalPrice }),
+                });
 
-            const result = await response.json();
-            console.log('API Response:', result);
-
-            if (response.ok) {
-                toast.success('Order placed successfully');
-                setOrderPlaced(true); // Đơn hàng đã được đặt thành công
+                const result = await response.json();
+                if (response.ok) {
+                    window.location.href = result.approvalUrl;
+                    dispatch(resetCart()); // Reset giỏ hàng sau khi đặt hàng thành công
+                    navigate('/success');
+                } else {
+                    toast.error(result.message || 'Error creating PayPal transaction');
+                }
             } else {
-                toast.error(result.message || 'Error placing order');
+                // Nếu thanh toán bằng COD
+                const response = await fetch(SummaryApi.createOrder.url, {
+                    method: SummaryApi.createOrder.method,
+                    headers,
+                    body: JSON.stringify(orderData),
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    toast.success('Order placed successfully');
+                    navigate('/success'); // Điều hướng đến trang success
+
+                    dispatch(resetCart()); // Reset giỏ hàng sau khi đặt hàng thành công
+                } else {
+                    toast.error(result.message || 'Error placing order');
+                }
             }
         } catch (error) {
             console.error('Error placing order:', error);
@@ -88,20 +105,6 @@ export default function Checkout() {
         }
     };
 
-    if (orderPlaced) {
-        return (
-            <div className="min-h-screen bg-white text-black flex items-center justify-center">
-                <div className="text-center">
-                    <Check size={64} className="mx-auto mb-4" />
-                    <h2 className="text-2xl font-light mb-4">Thank you for your order</h2>
-                    <p className="text-gray-600">Your order has been placed successfully.</p>
-                    <button className="mt-4 bg-black text-white py-2 px-4 rounded" onClick={() => navigate('/')}>
-                        Back to Home
-                    </button>
-                </div>
-            </div>
-        );
-    }
 
     return (
         <div className="min-h-screen bg-white text-black flex justify-center items-center p-4">
@@ -113,7 +116,7 @@ export default function Checkout() {
                             <h2 className="text-xl font-light mb-6">Order Summary</h2>
                             <div className="max-h-64 overflow-y-auto mb-6">
                                 {cartItems.map((item) => (
-                                    <div key={item._id} className="flex items-center mb-4"> {/* Ensure key is unique */}
+                                    <div key={item._id} className="flex items-center mb-4">
                                         <img src={item.productImage} alt={item.productName} className="w-16 h-20 object-cover mr-4" />
                                         <div>
                                             <h3 className="font-medium">{item.productName}</h3>

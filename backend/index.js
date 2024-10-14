@@ -3,7 +3,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
 const connectDB = require('./config/db');
-const router = require('./routes'); // Đường dẫn đúng tới file router
+const router = require('./routes');
 
 const app = express();
 

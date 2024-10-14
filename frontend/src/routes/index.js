@@ -15,7 +15,8 @@ import Men from "../pages/Men"; // Trang hiển thị sản phẩm Men
 import Women from "../pages/Women"; // Trang hiển thị sản phẩm Women
 import Collections from "../pages/Collections";
 import ProductDetails from "../pages/ProductDetails";
-import Checkout from "../pages/Checkout"; // Trang chi tiết sản phẩm
+import Checkout from "../pages/Checkout"; // Trang giỏ hàng
+import Success from "../pages/Success"; // Import trang Success
 
 const router = createBrowserRouter([
   {
@@ -47,7 +48,7 @@ const router = createBrowserRouter([
         element: <Cart />,
       },
       {
-        path: "checkout", // Trang giỏ hàng
+        path: "checkout", // Trang thanh toán
         element: <Checkout />,
       },
       {
@@ -87,6 +88,10 @@ const router = createBrowserRouter([
             element: <Analytics />,
           },
         ],
+      },
+      {
+        path: "success", // Route cho trang thành công
+        element: <Success />,  // Thêm trang Success
       },
     ],
   },

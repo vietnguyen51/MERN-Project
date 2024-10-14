@@ -7,7 +7,7 @@ import SearchDropdown from "./SearchDropdown";
 import SummaryApi from "../common/index";
 import { toast } from "react-toastify";
 import { setUserDetails } from "../store/userSlice";
-import { resetCart } from "../store/cartSlice";
+import { resetCart } from "../store/cartSlice"; // Import resetCart action
 import ROLE from "../common/role";
 
 export default function Header() {
@@ -41,6 +41,7 @@ export default function Header() {
     };
   }, [scrolled]);
 
+  // Handle logout and reset cart
   const handleLogout = async () => {
     const fetchData = await fetch(SummaryApi.logout_user.url, {
       method: SummaryApi.logout_user.method,
@@ -51,8 +52,8 @@ export default function Header() {
 
     if (data.success) {
       toast.success(data.message);
-      dispatch(setUserDetails(null));
-      dispatch(resetCart());
+      dispatch(setUserDetails(null)); // Xóa thông tin người dùng
+      dispatch(resetCart()); // Reset giỏ hàng
       navigate("/");
     }
 
@@ -127,10 +128,7 @@ export default function Header() {
                               </Link>
                           )}
                           <button
-                              onClick={() => {
-                                handleLogout();
-                                setIsUserMenuOpen(false);
-                              }}
+                              onClick={handleLogout} // Gọi handleLogout khi logout
                               className="block w-full text-center px-2 py-2 text-sm text-gray-700 hover:bg-gray-100"
                           >
                             Logout

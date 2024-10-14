@@ -1,13 +1,13 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {Link, useNavigate} from 'react-router-dom'; // Import useNavigate để điều hướng
-import { removeFromCart, updateQuantity } from '../store/cartSlice';
+import { Link, useNavigate } from 'react-router-dom';
+import { removeFromCart, updateQuantity } from '../store/cartSlice'; // Không cần resetCart ở đây
 import { X, Minus, Plus } from 'lucide-react';
 
 export default function Cart() {
     const items = useSelector((state) => state.cart.items);
     const dispatch = useDispatch();
-    const navigate = useNavigate(); // Khởi tạo useNavigate
+    const navigate = useNavigate();
 
     const handleRemoveItem = (id) => {
         dispatch(removeFromCart(id));
@@ -19,16 +19,9 @@ export default function Cart() {
         }
     };
 
-    const handleImageClick = (id) => {
-        // Điều hướng đến trang chi tiết sản phẩm khi người dùng click vào ảnh
-        navigate(`/product/${id}`);
+    const handleCheckoutClick = () => {
+        navigate('/checkout'); // Chỉ điều hướng đến trang thanh toán, không reset giỏ hàng tại đây
     };
-
-    const  handleCheckoutClick = () =>{
-        navigate('/checkout');
-    }
-
-
 
     const totalPrice = items.reduce((total, item) => total + item.price * item.quantity, 0);
 
@@ -37,24 +30,23 @@ export default function Cart() {
             <h1 className="text-3xl font-light uppercase tracking-widest mb-12">Shopping Bag</h1>
             {items.length === 0 ? (
                 <>
-                <p className="text-lg font-light">Your shopping bag is empty</p>
-                <h1 className="text-lg font-bold mt-4">
-                    <Link to="/" className="text-black-500 hover:underline">
-                        Continue Shopping
-                    </Link>
-                </h1>
+                    <p className="text-lg font-light">Your shopping bag is empty</p>
+                    <h1 className="text-lg font-bold mt-4">
+                        <Link to="/" className="text-black-500 hover:underline">
+                            Continue Shopping
+                        </Link>
+                    </h1>
                 </>
             ) : (
                 <div>
                     <div className="space-y-8">
                         {items.map((item) => (
                             <div key={item.id} className="flex items-center border-b border-gray-200 pb-6">
-                                {/* Khi click vào ảnh sẽ điều hướng đến trang chi tiết sản phẩm */}
                                 <img
                                     src={item.productImage}
                                     alt={item.productName}
                                     className="w-24 h-32 object-cover mr-6 cursor-pointer"
-                                    onClick={() => handleImageClick(item.id)} // Thêm sự kiện click vào ảnh
+                                    onClick={() => navigate(`/product/${item.id}`)}
                                 />
                                 <div className="flex-grow">
                                     <h2 className="text-lg font-medium mb-2">{item.productName}</h2>
@@ -90,9 +82,8 @@ export default function Cart() {
                             <span className="text-lg font-medium">${totalPrice.toFixed(2)}</span>
                         </div>
                         <button onClick={handleCheckoutClick}
-                            className="w-full bg-black text-white py-4 text-sm uppercase font-medium hover:bg-gray-900 transition-colors">
+                                className="w-full bg-black text-white py-4 text-sm uppercase font-medium hover:bg-gray-900 transition-colors">
                             Proceed to Checkout
-
                         </button>
                     </div>
                 </div>

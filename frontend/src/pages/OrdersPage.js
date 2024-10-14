@@ -23,7 +23,9 @@ const OrdersPage = () => {
             const dataResponse = await fetchData.json();
 
             if (dataResponse.success) {
-                setAllOrders(dataResponse.data);
+                // Sắp xếp các đơn hàng theo thời gian tạo, mới nhất trước
+                const sortedOrders = dataResponse.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                setAllOrders(sortedOrders);
             } else {
                 toast.error(dataResponse.message);
             }
@@ -33,6 +35,8 @@ const OrdersPage = () => {
             setLoading(false);
         }
     };
+
+
 
     useEffect(() => {
         fetchAllOrders();

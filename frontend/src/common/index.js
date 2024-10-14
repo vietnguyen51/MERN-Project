@@ -1,13 +1,14 @@
-const backendDomain = "http://localhost:8080";
+const backendDomain = "http://localhost:8080"; // Địa chỉ backend của bạn
 
 const SummaryApi = {
+  // User APIs
   signUP: {
     url: `${backendDomain}/api/signup`,
-    method: "post",
+    method: "post", // Chữ thường để tránh lỗi khi gọi fetch
   },
   signIn: {
     url: `${backendDomain}/api/signin`,
-    method: "post",
+    method: "post", // Chữ thường
   },
   current_user: {
     url: `${backendDomain}/api/user-details`,
@@ -25,6 +26,8 @@ const SummaryApi = {
     url: `${backendDomain}/api/update-user`,
     method: "post",
   },
+
+  // Product APIs
   uploadProduct: {
     url: `${backendDomain}/api/upload-product`,
     method: "post",
@@ -46,10 +49,11 @@ const SummaryApi = {
     method: "get",
   },
   productDetails: {
-    url: `${backendDomain}/api/product-details`,
+    url: `${backendDomain}/api/product-details`,  // Sửa lại kiểu tĩnh, không dùng hàm để tránh lỗi
     method: "get",
   },
-  // Thêm API để tạo đơn hàng
+
+  // Order APIs
   createOrder: {
     url: `${backendDomain}/api/create-order`,
     method: "post",
@@ -59,6 +63,14 @@ const SummaryApi = {
     method: "get",
   },
 
+  createPaypalOrder: {
+    url: `${backendDomain}/api/paypal/create-order`,
+    method: "post",
+  },
+  executePaypalPayment: {
+    url: `${backendDomain}/api/paypal/execute-payment`,
+    method: "post",
+  },
 };
 
 export default SummaryApi;
