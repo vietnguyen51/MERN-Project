@@ -77,7 +77,7 @@ export default function Checkout() {
                 if (response.ok) {
                     window.location.href = result.approvalUrl;
                     dispatch(resetCart()); // Reset giỏ hàng sau khi đặt hàng thành công
-                    navigate('/success');
+
                 } else {
                     toast.error(result.message || 'Error creating PayPal transaction');
                 }
@@ -92,9 +92,9 @@ export default function Checkout() {
                 const result = await response.json();
                 if (response.ok) {
                     toast.success('Order placed successfully');
-                    navigate('/success'); // Điều hướng đến trang success
 
                     dispatch(resetCart()); // Reset giỏ hàng sau khi đặt hàng thành công
+                    navigate('/success');
                 } else {
                     toast.error(result.message || 'Error placing order');
                 }

@@ -71,6 +71,24 @@ const SummaryApi = {
     url: `${backendDomain}/api/paypal/execute-payment`,
     method: "post",
   },
+  category: {
+    getAll: {
+      url: `${backendDomain}/api/categories`, // API để lấy tất cả các danh mục
+      method: "get",
+    },
+    getByGender: (gender) => ({
+      url: `${backendDomain}/api/categories/gender/${gender}`, // API theo giới tính (men, women)
+      method: "get",
+    }),
+    getByProductType: (type) => ({
+      url: `${backendDomain}/api/categories/type/${type}`, // API theo loại sản phẩm (shoes, bags, etc.)
+      method: "get",
+    }),
+    getBySubCategory: (gender, subCategory) => ({
+      url: `${backendDomain}/api/categories/${gender}/${subCategory}`, // API theo giới tính và danh mục con
+      method: "get",
+    }),
+  },
 };
 
 export default SummaryApi;

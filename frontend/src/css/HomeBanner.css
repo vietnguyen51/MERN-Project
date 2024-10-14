@@ -3,7 +3,7 @@
 .home-banner-container {
     position: relative;
     width: 100%;
-    height: calc(100vh - 64px); /* Full screen height minus header */
+    height: calc(100vh ); /* Full screen height minus header */
     margin: 0;
     overflow: hidden;
 }

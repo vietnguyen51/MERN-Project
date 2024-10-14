@@ -81,9 +81,9 @@ const ProductDetails = () => {
                 {/* Phần thông tin sản phẩm */}
                 <div className="lg:w-1/3 p-8 sticky top-0">
                     <h1 className="text-2xl font-semibold uppercase mb-4">{data.productName}</h1>
-                    <p className="text-xl font-semibold mb-2">{displayINRCurrency(data.sellingPrice)}</p>
+                    <p className="text-2xl font-semibold mb-2">{displayINRCurrency(data.sellingPrice)}</p>
                     <p className="text-gray-500 uppercase mb-6">{data.category}</p>
-                    <p className="text-gray-600 mb-6">{data.description}</p>
+                    <p className="text-gray-600 mb-6 uppercase">{data.description}</p>
                     <button
                         onClick={handleAddToCart}
                         className="w-full bg-black text-white py-3 text-sm uppercase font-medium hover:bg-gray-800 transition-colors mb-4"

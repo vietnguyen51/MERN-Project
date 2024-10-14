@@ -12,13 +12,14 @@ const updateUser = require("../controller/user/updateUser");
 
 const uploadProductController = require("../controller/product/uploadProduct");
 const getMenProductsController = require('../controller/product/getMenProductsController');
-const getWomenProductsController = require('../controller/product/getWomenProductsController');
+const getWomenProductsController = require('../controller/product/getWomenProductController');
 const getAllProductsController = require('../controller/product/getProduct');
 const updateProductController = require("../controller/product/updateProduct");
 const getProductDetails = require('../controller/product/getProductDetails');
 const createOrder = require('../controller/product/Order');
 const getAllOrders = require("../controller/product/getOrders");
 const updateOrderStatus = require('../controller/product/updateOrderStatus');
+const getProductsByGenderAndCategory = require('../controller/product/getProductsByGenderAndCategory');
 
 const { createPaypalOrderController, executePaypalPaymentController } = require('../controller/payment/paypal');
 
@@ -62,5 +63,9 @@ router.patch('/orders/:orderId/status', authToken, updateOrderStatus);
 
 router.post('/paypal/create-order', createPaypalOrderController);  // Tạo đơn hàng PayPal
 router.post('/paypal/execute-payment', executePaypalPaymentController);  // Thực thi thanh toán PayPal
+
+router.get('/collections/:genderCategory/:category', getProductsByGenderAndCategory);
+
+
 
 module.exports = router;
