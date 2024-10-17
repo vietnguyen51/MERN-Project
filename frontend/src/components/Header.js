@@ -85,7 +85,6 @@ export default function Header() {
       const data = await response.json();
 
       if (data.success) {
-        toast.success(data.message);
         dispatch(setUserDetails(null));
         dispatch(resetCart());
         navigate("/");

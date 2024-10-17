@@ -47,6 +47,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/code-frame": "^7.25.7",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.13"
