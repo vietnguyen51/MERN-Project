@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node server.js", 
+    "build": "react-scripts build",
+    "dev": "react-scripts start"
   },
+
   "keywords": [],
   "author": "",
   "license": "ISC",
