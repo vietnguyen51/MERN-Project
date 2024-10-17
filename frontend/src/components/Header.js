@@ -12,18 +12,18 @@ import ROLE from "../common/role";
 
 const categories = {
   WOMEN: [
-    { id: 1, label: "READY TO WEAR", subcategories: [ "JACKETS","PANTS", "SHIRTS", "JERSEY", "DENIM", "KNITWEAR", "OUTERWEAR", "LEATHER AND COATS"] },
-    { id: 2, label: "SHOES", subcategories: [ "FORMAL", "DERBIES", "LOAFERS", "SANDALS", "SNEAKERS"] },
-    { id: 3, label: "BAGS", subcategories: [ "BACKPACKS", "MESSENGERS", "CROSSBODY", "TRAVEL BAGS", "BRIEFCASES", "TOTES"] },
-    { id: 4, label: "SMALL LEATHER GOODS", subcategories: ["NEW ARRIVALS", "CARD CASES", "WALLETS", "POUCHES", "CASES AND HOLDERS"] },
-    { id: 5, label: "ACCESSORIES", subcategories: [ "BELTS", "JEWELRY", "SUNGLASSES", "OTHER ACCESSORIES"] },
+    { id: 1, label: "READY TO WEAR", subcategories: [ "JACKETS AND PANTS","DRESSES AND SKIRTS", "SHIRTS AND TOPS", "DENIM", "KNITWEAR", "OUTERWEAR"] },
+    { id: 2, label: "SHOES", subcategories: [ "FLATS", "LOAFERS", "SANDALS", "SNEAKERS"] },
+    { id: 3, label: "BAGS", subcategories: [ "BACKPACKS", "TRAVEL BAGS","BRIEFCASES", "TOTES"] },
+    { id: 4, label: "SMALL LEATHER GOODS", subcategories: ["CARD HOLDERS", "WALLETS", "POUCHES"] },
+    { id: 5, label: "ACCESSORIES", subcategories: [ "BELTS", "JEWELRY", "SUNGLASSES"] },
   ],
   MEN: [
-    { id: 1, label: "READY TO WEAR", subcategories: [ "JACKETS", "SHIRTS", "T-SHIRTS", "PANTS", "DENIM", "KNITWEAR", "OUTERWEAR"] },
+    { id: 1, label: "READY TO WEAR", subcategories: [ "JACKETS", "SHIRTS", "JERSEY", "PANTS", "DENIM", "KNITWEAR", "OUTERWEAR"] },
     { id: 2, label: "SHOES", subcategories: [ "FORMAL", "BOOTS", "SNEAKERS", "SANDALS"] },
-    { id: 3, label: "BAGS", subcategories: [ "BACKPACKS", "MESSENGERS", "TRAVEL BAGS", "BRIEFCASES", "TOTES"] },
+    { id: 3, label: "BAGS", subcategories: [ "BACKPACKS", "TRAVEL BAGS", "BRIEFCASES", "TOTES"] },
     { id: 4, label: "SMALL LEATHER GOODS", subcategories: ["CARD HOLDERS", "WALLETS", "POUCHES"] },
-    { id: 5, label: "ACCESSORIES", subcategories: [ "BELTS", "TIES", "SUNGLASSES", "OTHER ACCESSORIES"] },
+    { id: 5, label: "ACCESSORIES", subcategories: [ "BELTS", "JEWELRY", "SUNGLASSES"] },
   ],
   COLLECTIONS: [
     { id: 1, label: "SPRING-SUMMER 2024", subcategories: ["WOMEN", "MEN"] },
@@ -52,6 +52,7 @@ export default function Header() {
   const toggleSearch = () => setIsSearchOpen((prev) => !prev);
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
   const toggleUserMenu = () => setIsUserMenuOpen((prev) => !prev);
+
 
   useEffect(() => {
     const handleScroll = () => {

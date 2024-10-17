@@ -49,7 +49,7 @@ export default function Cart() {
                                     onClick={() => navigate(`/product/${item.id}`)}
                                 />
                                 <div className="flex-grow">
-                                    <h2 className="text-lg font-medium mb-2">{item.productName}</h2>
+                                    <h2 className="text-lg font-medium mb-2 uppercase">{item.productName}</h2>
                                     <p className="text-sm text-gray-600 mb-4">${item.price.toFixed(2)}</p>
                                     <div className="flex items-center">
                                         <button

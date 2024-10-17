@@ -101,7 +101,6 @@ const UploadProduct = ({ onClose, fetchData }) => {
   const responseData = await response.json();
 
   if (responseData.success) {
-    toast.success(responseData?.message);
     onClose();
 
     // Kiểm tra fetchData có tồn tại trước khi gọi
