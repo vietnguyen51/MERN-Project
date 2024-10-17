@@ -1,16 +1,17 @@
-const mongoose = require('mongoose');
+// connectDB.js
+const mongoose = require("mongoose");
 
-const connectDB = async () => {
+async function connectDB() {
     try {
-        await mongoose.connect(process.env.MONGO_URI, {
+        await mongoose.connect(process.env.MONGODB_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
+            serverSelectionTimeoutMS: 5000, // Tăng timeout nếu cần
         });
-        console.log('MongoDB connected');
-    } catch (error) {
-        console.error('MongoDB connection failed:', error.message);
-        process.exit(1); // Thoát nếu kết nối thất bại
+        console.log("Connected to MongoDB");
+    } catch (err) {
+        console.error("Failed to connect to MongoDB:", err);
     }
-};
+}
 
 module.exports = connectDB;

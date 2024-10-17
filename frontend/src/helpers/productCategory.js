@@ -9,8 +9,8 @@ const productCategory = [
   { id: 7, label: "outerwear" },
   { id: 8, label: "jackets-and-pants" },
   { id: 28, label: "t-shirts" },
-  { id: 29, label: "shirts-and-tops" },
-  { id: 30, label: "dresses-and-skirts" },
+  { id: 29, label: "dresses" },
+  { id: 30, label: "skirts" },
   { id: 31, label: "sweaters" },
   { id: 32, label: "coats" },
   { id: 33, label: "shorts" },
@@ -23,7 +23,6 @@ const productCategory = [
   { id: 12, label: "sandals" },
   { id: 13, label: "sneakers" },
   { id: 28, label: "boots" },
-  { id: 29, label: "flats" },
 
   // Túi xách
   { id: 14, label: "backpacks" },
