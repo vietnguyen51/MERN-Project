@@ -4,11 +4,11 @@ const SummaryApi = {
   // User APIs
   signUP: {
     url: `${backendDomain}/api/signup`,
-    method: "post", // Chữ thường để tránh lỗi khi gọi fetch
+    method: "post",
   },
   signIn: {
     url: `${backendDomain}/api/signin`,
-    method: "post", // Chữ thường
+    method: "post",
   },
   current_user: {
     url: `${backendDomain}/api/user-details`,
@@ -49,7 +49,11 @@ const SummaryApi = {
     method: "get",
   },
   productDetails: {
-    url: `${backendDomain}/api/product-details`,  // Sửa lại kiểu tĩnh, không dùng hàm để tránh lỗi
+    url: `${backendDomain}/api/product-details`,
+    method: "get",
+  },
+  searchProduct: {
+    url: `${backendDomain}/api/search-products`,
     method: "get",
   },
 
@@ -63,6 +67,7 @@ const SummaryApi = {
     method: "get",
   },
 
+  // PayPal APIs
   createPaypalOrder: {
     url: `${backendDomain}/api/paypal/create-order`,
     method: "post",
@@ -71,21 +76,23 @@ const SummaryApi = {
     url: `${backendDomain}/api/paypal/execute-payment`,
     method: "post",
   },
+
+  // Category APIs
   category: {
     getAll: {
-      url: `${backendDomain}/api/categories`, // API để lấy tất cả các danh mục
+      url: `${backendDomain}/api/categories`,
       method: "get",
     },
     getByGender: (gender) => ({
-      url: `${backendDomain}/api/categories/gender/${gender}`, // API theo giới tính (men, women)
+      url: `${backendDomain}/api/categories/gender/${gender}`,
       method: "get",
     }),
     getByProductType: (type) => ({
-      url: `${backendDomain}/api/categories/type/${type}`, // API theo loại sản phẩm (shoes, bags, etc.)
+      url: `${backendDomain}/api/categories/type/${type}`,
       method: "get",
     }),
     getBySubCategory: (gender, subCategory) => ({
-      url: `${backendDomain}/api/categories/${gender}/${subCategory}`, // API theo giới tính và danh mục con
+      url: `${backendDomain}/api/categories/${gender}/${subCategory}`,
       method: "get",
     }),
   },

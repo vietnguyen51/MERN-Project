@@ -20,8 +20,9 @@ const createOrder = require('../controller/product/Order');
 const getAllOrders = require("../controller/product/getOrders");
 const updateOrderStatus = require('../controller/product/updateOrderStatus');
 const getProductsByGenderAndCategory = require('../controller/product/getProductsByGenderAndCategory');
-
 const { createPaypalOrderController, executePaypalPaymentController } = require('../controller/payment/paypal');
+const searchProductController = require('../controller/product/searchProduct');
+
 
 // Routes cho đăng ký, đăng nhập, và thông tin người dùng
 router.post("/signup", userSignUpController);
@@ -52,20 +53,21 @@ router.get('/women-products', getWomenProductsController);
 router.get("/product-details/:productId", getProductDetails);
 
 // Route để tạo đơn hàng
-router.post('/create-order', authToken, createOrder); // Cần xác thực người dùng khi tạo đơn hàng
+router.post('/create-order', authToken, createOrder);
 
 // Route để lấy tất cả đơn hàng
-router.get('/orders', authToken, getAllOrders);       // Chỉ admin hoặc người bán có quyền lấy tất cả đơn hàng
+router.get('/orders', authToken, getAllOrders);
 
 // Route để cập nhật trạng thái đơn hàng (yêu cầu xác thực)
 router.patch('/orders/:orderId/status', authToken, updateOrderStatus);
 
-
-router.post('/paypal/create-order', createPaypalOrderController);  // Tạo đơn hàng PayPal
-router.post('/paypal/execute-payment', executePaypalPaymentController);  // Thực thi thanh toán PayPal
-
+// Tạo đơn hàng PayPal
+router.post('/paypal/create-order', createPaypalOrderController);
+// Thực thi thanh toán PayPal
+router.post('/paypal/execute-payment', executePaypalPaymentController);
 router.get('/collections/:genderCategory/:category', getProductsByGenderAndCategory);
-
+// Route tìm kiếm sản phẩm
+router.get('/search-products', searchProductController);
 
 
 module.exports = router;

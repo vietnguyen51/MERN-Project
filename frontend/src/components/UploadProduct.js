@@ -5,6 +5,7 @@ import uploadImage from "../helpers/uploadImage";
 import DisplayImage from "./DisplayImage";
 import { toast } from "react-toastify";
 import SummaryApi from "../common";
+import SearchProduct   from "./SearchProduct";
 
 const UploadProduct = ({ onClose, fetchData }) => {
   const [data, setData] = useState({

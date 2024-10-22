@@ -41,7 +41,6 @@ const Login = () => {
     console.log("data login", data); // Giữ lại log của dữ liệu đăng nhập
 
     if (dataApi.success) {
-      toast.success(dataApi.message);
       navigate('/'); // Điều hướng về trang chủ sau khi đăng nhập thành công
       fetchUserDetails()
     }

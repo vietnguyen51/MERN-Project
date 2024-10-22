@@ -8,9 +8,10 @@ const orderSchema = new mongoose.Schema({
     paymentMethod: { type: String, required: true },
     items: [
         {
-            productId: { type: mongoose.Schema.Types.ObjectId, ref: 'product', required: true }, // Tham chiếu tới Product Model
+            productId: { type: mongoose.Schema.Types.ObjectId, ref: 'product', required: true },
+            productName: { type: String },
             quantity: { type: Number, required: true },
-            price: { type: Number, required: true } // Lưu giá sản phẩm tại thời điểm mua
+            price: { type: Number, required: true }
         }
     ],
     totalPrice: { type: Number, required: true },

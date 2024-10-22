@@ -1,10 +1,12 @@
-const Order = require('../../models/orderModel'); // Import model Order
+const Order = require("../../models/orderModel");
 
-// Hàm lấy tất cả các đơn hàng
 const getAllOrders = async (req, res) => {
     try {
-        // Populate để lấy thông tin sản phẩm từ productId
-        const orders = await Order.find().populate('items.productId');
+        // Populate để lấy productName và productImage từ Product Collection
+        const orders = await Order.find().populate({
+            path: 'items.productId',
+            select: 'productName productImage', // Chỉ lấy các trường cần thiết
+        });
 
         res.json({
             message: 'Orders fetched successfully',

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Menu, X, Search, ShoppingBag, User, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import SearchDropdown from "./SearchDropdown";
+import SearchProduct from "./SearchProduct";
 import SummaryApi from "../common/index";
 import { toast } from "react-toastify";
 import { setUserDetails } from "../store/userSlice";
@@ -52,6 +52,18 @@ export default function Header() {
   const toggleSearch = () => setIsSearchOpen((prev) => !prev);
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
   const toggleUserMenu = () => setIsUserMenuOpen((prev) => !prev);
+
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setActiveDropdown(null); // Đóng menu khi click ra ngoài
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, []);
 
 
   useEffect(() => {
@@ -107,9 +119,9 @@ export default function Header() {
                   aria-label="Toggle menu"
               >
                 {isMenuOpen ? (
-                    <X size={24} className={scrolled ? 'text-black' : 'text-white'} />
+                    <X size={24} className={scrolled ? 'text-black' : 'text-white'}/>
                 ) : (
-                    <Menu size={24} className={scrolled ? 'text-black' : 'text-white'} />
+                    <Menu size={24} className={scrolled ? 'text-black' : 'text-white'}/>
                 )}
               </button>
 
@@ -124,23 +136,24 @@ export default function Header() {
                     <div
                         key={category}
                         className="relative group"
-                        onMouseEnter={() => setActiveDropdown(category)}
-                        onMouseLeave={() => setActiveDropdown(null)}
+                        onMouseEnter={() => setActiveDropdown(category)} // Mở menu khi di chuột vào
                     >
                       <span className="text-sm tracking-wide cursor-pointer">{category}</span>
                     </div>
                 ))}
               </nav>
 
+
               <div className="flex items-center space-x-6">
                 <button aria-label="Search" onClick={toggleSearch}>
-                  <Search size={20} className={scrolled ? 'text-black' : 'text-white'} />
+                  <Search size={20} className={scrolled ? 'text-black' : 'text-white'}/>
                 </button>
 
                 <Link to="/cart" aria-label="Shopping bag" className="relative">
-                  <ShoppingBag size={20} className={scrolled ? 'text-black' : 'text-white'} />
+                  <ShoppingBag size={20} className={scrolled ? 'text-black' : 'text-white'}/>
                   {cartItemsCount > 0 && (
-                      <span className="absolute -top-2 -right-2 bg-black text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                      <span
+                          className="absolute -top-2 -right-2 bg-black text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                     {cartItemsCount}
                   </span>
                   )}
@@ -153,8 +166,8 @@ export default function Header() {
                             onClick={toggleUserMenu}
                             className="flex items-center space-x-1"
                         >
-                          <User size={20} className={scrolled ? 'text-black' : 'text-white'} />
-                          <ChevronDown size={16} className={scrolled ? 'text-black' : 'text-white'} />
+                          <User size={20} className={scrolled ? 'text-black' : 'text-white'}/>
+                          <ChevronDown size={16} className={scrolled ? 'text-black' : 'text-white'}/>
                         </button>
                         {isUserMenuOpen && (
                             <div className="absolute right-0 mt-2 w-48 bg-white text-black shadow-lg z-50">
@@ -182,7 +195,7 @@ export default function Header() {
                           aria-label="Login"
                           className="flex items-center space-x-1"
                       >
-                        <User size={20} className={scrolled ? 'text-black' : 'text-white'} />
+                        <User size={20} className={scrolled ? 'text-black' : 'text-white'}/>
                         <span className="hidden md:inline text-sm">Login</span>
                       </Link>
                   )}
@@ -194,12 +207,13 @@ export default function Header() {
 
         {/* Dropdown menu with fade-in effect */}
         <div
+            ref={dropdownRef}
             className={`fixed left-0 right-0 bg-white z-40 shadow-lg transition-all duration-300 ease-in-out ${
                 activeDropdown ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
             }`}
-            style={{ top: '64px' }} // Adjust this value based on your header height
-            onMouseEnter={() => setActiveDropdown(activeDropdown)}
-            onMouseLeave={() => setActiveDropdown(null)}
+            style={{top: '64px'}}
+            onMouseEnter={() => setActiveDropdown(activeDropdown)} // Giữ menu mở khi di chuột vào dropdown
+            onMouseLeave={() => setActiveDropdown(null)} // Đóng khi rời khỏi dropdown
         >
           <div className="container mx-auto px-4 py-8">
             <div className="grid grid-cols-5 gap-8">
@@ -210,10 +224,8 @@ export default function Header() {
                       {category.subcategories.map((subcat, index) => (
                           <Link
                               key={index}
-                              // Đường dẫn chỉ bao gồm /collections/:genderCategory/:subcategory
                               to={`/collections/${activeDropdown.toLowerCase()}/${subcat.toLowerCase().replace(/\s+/g, '-')}`}
                               className="block text-sm text-gray-600 hover:text-black transition-colors duration-200"
-                              onClick={() => setActiveDropdown(null)}
                           >
                             {subcat}
                           </Link>
@@ -221,11 +233,10 @@ export default function Header() {
                     </nav>
                   </div>
               ))}
-
-
             </div>
           </div>
         </div>
+
 
         {/* Mobile menu */}
         <div
@@ -263,7 +274,7 @@ export default function Header() {
           </div>
         </div>
 
-        {isSearchOpen && <SearchDropdown onClose={() => setIsSearchOpen(false)} />}
+        {isSearchOpen && <SearchProduct onClose={() => setIsSearchOpen(false)} />}
         <div className="h-16"></div> {/* Spacer to push content below fixed header */}
       </>
   );

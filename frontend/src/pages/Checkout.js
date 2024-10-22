@@ -47,13 +47,14 @@ export default function Checkout() {
             city: shippingAddress.city,
             paymentMethod,
             items: cartItems.map(item => ({
-                productId: item.id,
+                productId: item.id || item._id,
                 productName: item.productName,
                 quantity: item.quantity,
                 price: item.price,
             })),
             totalPrice,
         };
+
 
         try {
             const token = localStorage.getItem('token');
@@ -86,12 +87,12 @@ export default function Checkout() {
                 const response = await fetch(SummaryApi.createOrder.url, {
                     method: SummaryApi.createOrder.method,
                     headers,
+                    credentials: 'include',
                     body: JSON.stringify(orderData),
                 });
 
                 const result = await response.json();
                 if (response.ok) {
-                    toast.success('Order placed successfully');
 
                     dispatch(resetCart()); // Reset giỏ hàng sau khi đặt hàng thành công
                     navigate('/success');

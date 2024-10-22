@@ -213,9 +213,10 @@ const OrdersPage = () => {
                                 <ul>
                                     {selectedOrder.items.map((item) => (
                                         <li key={item.productId} className="flex justify-between mb-2">
-                                            <span>
+                                            <span className="uppercase">
 
                                                 {item.productName} x {item.quantity}
+                                                {item.image}
                                             </span>
                                             <span>${item.price.toFixed(2)}</span>
                                         </li>

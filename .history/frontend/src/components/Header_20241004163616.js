@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Menu, X, Search, ShoppingBag, User, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import SearchDropdown from './SearchDropdown';
+import SearchDropdown from './SearchProduct';
 import SummaryApi from '../common/index';
 import { toast } from 'react-toastify'
 import { setUserDetails } from '../store/userSlice';
