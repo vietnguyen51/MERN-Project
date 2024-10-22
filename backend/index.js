@@ -6,6 +6,8 @@ const connectDB = require('./config/db'); // Hàm kết nối với MongoDB
 const router = require('./routes/index'); // Import router
 
 const app = express();
+const BSON = require('bson');
+console.log(BSON);
 
 // Thiết lập CORS
 app.use(cors({
