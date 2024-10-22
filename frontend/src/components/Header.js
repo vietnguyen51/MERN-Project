@@ -110,106 +110,113 @@ export default function Header() {
 
   return (
       <>
-        <header className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white text-black' : 'bg-black text-white'}`}>
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex justify-between items-center">
-              <button
-                  className="lg:hidden z-50 transition-colors duration-300"
-                  onClick={toggleMenu}
-                  aria-label="Toggle menu"
-              >
-                {isMenuOpen ? (
-                    <X size={24} className={scrolled ? 'text-black' : 'text-white'}/>
-                ) : (
-                    <Menu size={24} className={scrolled ? 'text-black' : 'text-white'}/>
-                )}
-              </button>
+      <header
+          className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'text-black' : 'text-white'}`}
+          style={{
+            backgroundColor: scrolled ? 'rgba(248, 247, 245, 1)' : 'black'
+          }}
+      >
 
-              <div className="text-center lg:text-left">
-                <Link to="/" className="text-2xl font-light tracking-widest">
-                  SAINT LAURENT
-                </Link>
-              </div>
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex justify-between items-center">
+          <button
+              className="lg:hidden z-50 transition-colors duration-300"
+              onClick={toggleMenu}
+              aria-label="Toggle menu"
+          >
+            {isMenuOpen ? (
+                <X size={24} className={scrolled ? 'text-black' : 'text-white'}/>
+            ) : (
+                <Menu size={24} className={scrolled ? 'text-black' : 'text-white'}/>
+            )}
+          </button>
 
-              <nav className="hidden lg:flex space-x-8">
-                {mainCategories.map((category) => (
-                    <div
-                        key={category}
-                        className="relative group"
-                        onMouseEnter={() => setActiveDropdown(category)} // Mở menu khi di chuột vào
-                    >
-                      <span className="text-sm tracking-wide cursor-pointer">{category}</span>
-                    </div>
-                ))}
-              </nav>
+          <div className="text-center lg:text-left">
+            <Link to="/" className="text-2xl font-light tracking-widest">
+              SAINT LAURENT
+            </Link>
+          </div>
+
+          <nav className="hidden lg:flex space-x-8">
+            {mainCategories.map((category) => (
+                <div
+                    key={category}
+                    className="relative group"
+                    onMouseEnter={() => setActiveDropdown(category)} // Mở menu khi di chuột vào
+                >
+                  <span className="text-sm tracking-wide cursor-pointer">{category}</span>
+                </div>
+            ))}
+          </nav>
 
 
-              <div className="flex items-center space-x-6">
-                <button aria-label="Search" onClick={toggleSearch}>
-                  <Search size={20} className={scrolled ? 'text-black' : 'text-white'}/>
-                </button>
+          <div className="flex items-center space-x-6">
+            <button aria-label="Search" onClick={toggleSearch}>
+              <Search size={20} className={scrolled ? 'text-black' : 'text-white'}/>
+            </button>
 
-                <Link to="/cart" aria-label="Shopping bag" className="relative">
-                  <ShoppingBag size={20} className={scrolled ? 'text-black' : 'text-white'}/>
-                  {cartItemsCount > 0 && (
-                      <span
-                          className="absolute -top-2 -right-2 bg-black text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+            <Link to="/cart" aria-label="Shopping bag" className="relative">
+              <ShoppingBag size={20} className={scrolled ? 'text-black' : 'text-white'}/>
+              {cartItemsCount > 0 && (
+                  <span
+                      className="absolute -top-2 -right-2 bg-black text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                     {cartItemsCount}
                   </span>
-                  )}
-                </Link>
+              )}
+            </Link>
 
-                <div className="relative">
-                  {user?._id ? (
-                      <div>
-                        <button
-                            onClick={toggleUserMenu}
-                            className="flex items-center space-x-1"
-                        >
-                          <User size={20} className={scrolled ? 'text-black' : 'text-white'}/>
-                          <ChevronDown size={16} className={scrolled ? 'text-black' : 'text-white'}/>
-                        </button>
-                        {isUserMenuOpen && (
-                            <div className="absolute right-0 mt-2 w-48 bg-white text-black shadow-lg z-50">
-                              {user?.role === ROLE.ADMIN && (
-                                  <Link
-                                      to="/admin-panel/all-users"
-                                      className="block px-4 py-2 text-sm hover:bg-gray-100"
-                                      onClick={() => setIsUserMenuOpen(false)}
-                                  >
-                                    Admin Panel
-                                  </Link>
-                              )}
-                              <button
-                                  onClick={handleLogout}
-                                  className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+            <div className="relative">
+              {user?._id ? (
+                  <div>
+                    <button
+                        onClick={toggleUserMenu}
+                        className="flex items-center space-x-1"
+                    >
+                      <User size={20} className={scrolled ? 'text-black' : 'text-white'}/>
+                      <ChevronDown size={16} className={scrolled ? 'text-black' : 'text-white'}/>
+                    </button>
+                    {isUserMenuOpen && (
+                        <div className="absolute right-0 mt-2 w-48 bg-white text-black shadow-lg z-50">
+                          {user?.role === ROLE.ADMIN && (
+                              <Link
+                                  to="/admin-panel/all-users"
+                                  className="block px-4 py-2 text-sm hover:bg-gray-100"
+                                  onClick={() => setIsUserMenuOpen(false)}
                               >
-                                Logout
-                              </button>
-                            </div>
-                        )}
-                      </div>
-                  ) : (
-                      <Link
-                          to="/login"
-                          aria-label="Login"
-                          className="flex items-center space-x-1"
-                      >
-                        <User size={20} className={scrolled ? 'text-black' : 'text-white'}/>
-                        <span className="hidden md:inline text-sm">Login</span>
-                      </Link>
-                  )}
-                </div>
-              </div>
+                                Admin Panel
+                              </Link>
+                          )}
+                          <button
+                              onClick={handleLogout}
+                              className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                          >
+                            Logout
+                          </button>
+                        </div>
+                    )}
+                  </div>
+              ) : (
+                  <Link
+                      to="/login"
+                      aria-label="Login"
+                      className="flex items-center space-x-1"
+                  >
+                    <User size={20} className={scrolled ? 'text-black' : 'text-white'}/>
+                    <span className="hidden md:inline text-sm">Login</span>
+                  </Link>
+              )}
             </div>
           </div>
-        </header>
+        </div>
+      </div>
+      </header>
 
-        {/* Dropdown menu with fade-in effect */}
-        <div
-            ref={dropdownRef}
-            className={`fixed left-0 right-0 bg-white z-40 shadow-lg transition-all duration-300 ease-in-out ${
-                activeDropdown ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
+  {/* Dropdown menu with fade-in effect */
+  }
+  <div
+      ref={dropdownRef}
+      className={`fixed left-0 right-0 bg-white z-40 shadow-lg transition-all duration-300 ease-in-out ${
+          activeDropdown ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
             }`}
             style={{top: '64px'}}
             onMouseEnter={() => setActiveDropdown(activeDropdown)} // Giữ menu mở khi di chuột vào dropdown

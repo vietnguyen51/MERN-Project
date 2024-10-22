@@ -46,14 +46,22 @@ export default function SearchProduct({ onClose }) {
 
     return (
         <div className={`fixed inset-0 z-50 flex ${fadeIn ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}>
-            <div className="w-1/2 bg-black bg-opacity-50" onClick={closeModal}></div>
+            <div className="w-1/2 bg-black bg-opacity-50"
+                 onClick={closeModal}>
+            </div>
 
-            <div className="w-1/2 bg-white overflow-y-auto transform transition-transform duration-300 ${fadeIn ? 'translate-x-0' : 'translate-x-full'}">
+            <div
+                className={`w-1/2 overflow-y-auto transform transition-transform duration-300 ${
+                    fadeIn ? 'translate-x-0' : 'translate-x-full'
+                }`}
+                style={{backgroundColor: 'rgba(248, 247, 245, 1)'}}
+            >
+
                 <div className="p-8">
                     <div className="flex justify-between items-center mb-8">
                         <h2 className="text-2xl font-light">SEARCH</h2>
                         <button onClick={closeModal} aria-label="Close search">
-                            <X size={24} />
+                            <X size={24}/>
                         </button>
                     </div>
                     <input
@@ -61,8 +69,9 @@ export default function SearchProduct({ onClose }) {
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         placeholder="Search products..."
-                        className="w-full py-2 border-b border-gray-300 focus:outline-none"
+                        className="w-full py-2 border-b border-gray-300 focus:outline-none bg-[#f8f7f5] text-black placeholder-gray-500 focus:border-black"
                     />
+
                     <div className="mt-8">
                         {isSearching ? (
                             <div className="flex items-center justify-center h-32">
@@ -71,20 +80,30 @@ export default function SearchProduct({ onClose }) {
                         ) : products.length > 0 ? (
                             <ul className="space-y-6">
                                 {products.map((product) => (
-                                    <li key={product._id} className="flex items-start space-x-4">
+                                    <li
+                                        key={product._id}
+                                        className="flex items-center space-x-6" // Căn giữa ảnh và nội dung theo chiều dọc
+                                        style={{minHeight: '120px'}} // Đảm bảo mỗi hàng có chiều cao đồng đều
+                                    >
                                         <Link to={`/product/${product._id}`} onClick={closeModal}>
-                                            <img src={product.productImage[0] || '/placeholder.svg'} alt={product.productName} className="w-24 h-32 object-cover" />
+                                            <img
+                                                src={product.productImage[0] || '/placeholder.svg'}
+                                                alt={product.productName}
+                                                className="w-24 h-32 object-cover flex-shrink-0" // Ảnh cố định kích thước
+                                            />
                                         </Link>
-                                        <div>
+                                        <div className="flex flex-col justify-between h-full flex-1">
                                             <Link to={`/product/${product._id}`} onClick={closeModal}>
-                                                <h4 className="text-sm font-medium text-black uppercase">{product.productName}</h4>
+                                                <h4 className="text-sm font-medium text-black uppercase line-clamp-2">
+                                                    {product.productName}
+                                                </h4>
                                             </Link>
-                                            <p className="text-xs text-gray-500 mt-1 uppercase">{product.description}</p>
-                                            <p className="text-xl font-medium mt-2 ">${product.price.toFixed(2)}</p>
+                                            <p className="text-xl font-medium mt-2">${product.price.toFixed(2)}</p>
                                         </div>
                                     </li>
                                 ))}
                             </ul>
+
                         ) : (
                             <div className="flex items-center justify-center h-32">
                                 <p className="text-gray-500">No products found.</p>
