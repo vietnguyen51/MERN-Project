@@ -111,7 +111,7 @@ const ProductDetails = () => {
             {data.category && (
                 <CategoryWiseProductDisplay
                     category={data.category}
-                    heading="Recommended"
+                    heading="You may also like"
                     currentProductId={id}
                 />
             )}
