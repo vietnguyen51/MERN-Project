@@ -22,6 +22,7 @@ const updateOrderStatus = require('../controller/product/updateOrderStatus');
 const getProductsByGenderAndCategory = require('../controller/product/getProductsByGenderAndCategory');
 const { createPaypalOrderController, executePaypalPaymentController } = require('../controller/payment/paypal');
 const searchProductController = require('../controller/product/searchProduct');
+const getCategoryWiseProduct = require('../controller/product/getCategoryWiseProduct');
 
 
 // Routes cho đăng ký, đăng nhập, và thông tin người dùng
@@ -51,6 +52,7 @@ router.get('/women-products', getWomenProductsController);
 
 // Route để lấy chi tiết sản phẩm theo ID
 router.get("/product-details/:productId", getProductDetails);
+router.get('/category-products', getCategoryWiseProduct);
 
 // Route để tạo đơn hàng
 router.post('/create-order', authToken, createOrder);

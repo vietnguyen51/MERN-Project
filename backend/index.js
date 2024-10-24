@@ -10,15 +10,15 @@ const BSON = require('bson');
 console.log(BSON);
 
 // Thiết lập CORS
+// Đảm bảo CORS middleware đứng trước router
 app.use(cors({
-    origin: process.env.FRONTEND_URL || "*", // Đảm bảo FRONTEND_URL được khai báo
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
+    origin: process.env.FRONTEND_URL || "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"], // Đảm bảo OPTIONS được liệt kê
+    credentials: true,
 }));
 
-// Middleware xử lý JSON và Cookie
-app.use(express.json());
-app.use(cookieParser());
+app.use(express.json()); // Middleware để parse JSON
+app.use(cookieParser()); // Middleware để parse Cookie
 
 // Định nghĩa route API
 app.use("/api", router);

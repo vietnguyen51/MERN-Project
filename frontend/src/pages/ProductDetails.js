@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../store/cartSlice'; // Import hành động từ Redux slice
 import SummaryApi from '../common/index'; // API URL configuration
-import displayINRCurrency from '../helpers/displayUSDCurrency'; // Utility để hiển thị giá tiền
+import displayINRCurrency from '../helpers/displayUSDCurrency';
+import CategoryWiseProductDisplay from "../components/CategoryWiseProductDisplay"; // Utility để hiển thị giá tiền
 
 const ProductDetails = () => {
     const [data, setData] = useState({
@@ -19,27 +20,35 @@ const ProductDetails = () => {
     const { id } = useParams(); // Lấy productId từ URL
     const dispatch = useDispatch(); // Khởi tạo dispatch để gửi hành động đến Redux
 
-    // Hàm để lấy dữ liệu chi tiết sản phẩm từ API
+    const [similarProducts, setSimilarProducts] = useState([]); // State để lưu sản phẩm tương tự
+
     const fetchProductDetails = async () => {
         setLoading(true);
         try {
             const response = await fetch(`${SummaryApi.productDetails.url}/${id}`, {
                 method: 'GET',
             });
-
             const dataResponse = await response.json();
 
             if (response.ok) {
-                setData(dataResponse?.data); // Cập nhật dữ liệu sản phẩm
+                setData(dataResponse?.data); // Cập nhật chi tiết sản phẩm
+
+                // Gọi API lấy sản phẩm tương tự
+                const similarResponse = await fetch(`${SummaryApi.similarProducts.url}/${id}/similar`, {
+                    method: 'GET',
+                });
+                const similarData = await similarResponse.json();
+                setSimilarProducts(similarData?.data); // Cập nhật sản phẩm tương tự
             } else {
                 console.error('Failed to fetch product details:', dataResponse);
             }
-            setLoading(false);
         } catch (error) {
             console.error('Error fetching product details:', error);
+        } finally {
             setLoading(false);
         }
     };
+
 
     // Sử dụng useEffect để gọi API khi component được render
     useEffect(() => {
@@ -99,6 +108,14 @@ const ProductDetails = () => {
                     </div>
                 </div>
             </div>
+            {data.category && (
+                <CategoryWiseProductDisplay
+                    category={data.category}
+                    heading="Recommended"
+                    currentProductId={id}
+                />
+            )}
+
         </div>
     );
 };

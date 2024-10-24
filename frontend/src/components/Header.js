@@ -187,11 +187,18 @@ export default function Header() {
                               </Link>
                           )}
                           <button
+                              onClick={() => navigate('/my-orders')}
+                              className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                          >
+                            My Orders
+                          </button>
+                          <button
                               onClick={handleLogout}
                               className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
                           >
                             Logout
                           </button>
+
                         </div>
                     )}
                   </div>
@@ -201,7 +208,7 @@ export default function Header() {
                       aria-label="Login"
                       className="flex items-center space-x-1"
                   >
-                    <User size={20} className={scrolled ? 'text-black' : 'text-white'}/>
+                  <User size={20} className={scrolled ? 'text-black' : 'text-white'}/>
                     <span className="hidden md:inline text-sm">Login</span>
                   </Link>
               )}

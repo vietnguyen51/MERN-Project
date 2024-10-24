@@ -17,7 +17,13 @@ import Collections from "../pages/Collections";
 import ProductDetails from "../pages/ProductDetails";
 import Checkout from "../pages/Checkout"; // Trang thanh toán
 import Success from "../pages/Success";
-import CategoryProducts from "../pages/CategoryProducts"; // Trang thành công sau khi thanh toán
+import CategoryProducts from "../pages/CategoryProducts";
+import Contact from "../pages/Contact"
+import About from "../pages/About";
+import Sustainability from "../pages/Sustainability";
+import Careers from "../pages/Careers"
+import ShippingReturns from "../pages/ShippingReturns";
+import MyOrders from "../components/MyOrders";
 
 const router = createBrowserRouter([
   {
@@ -30,7 +36,7 @@ const router = createBrowserRouter([
       },
       {
         path: "collections/:genderCategory/:category", // Route cho sản phẩm theo gender và category
-        element: <CategoryProducts />,
+         element: <CategoryProducts />,
       },
       {
         path: "collections/men", // Route cho sản phẩm Men
@@ -49,8 +55,32 @@ const router = createBrowserRouter([
         element: <Gifts />,
       },
       {
+        path: "contact",
+        element: <Contact />,
+      },
+      {
+        path: "about",
+        element: <About />,
+      },
+      {
+        path: "sustainability",
+        element: <Sustainability />,
+      },
+      {
+        path: "careers",
+        element: <Careers />,
+      },
+      {
+        path: "shipping-returns",
+        element: <ShippingReturns />,
+      },
+      {
         path: "cart", // Trang giỏ hàng
         element: <Cart />,
+      },
+      {
+        path: "my-orders", // Trang giỏ hàng
+        element: <MyOrders />,
       },
       {
         path: "checkout", // Trang thanh toán
