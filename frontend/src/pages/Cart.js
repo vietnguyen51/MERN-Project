@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { removeFromCart, updateQuantity } from '../store/cartSlice'; // Không cần resetCart ở đây
+import { removeFromCart, updateQuantity } from '../store/cartSlice';
 import { X, Minus, Plus } from 'lucide-react';
 
 export default function Cart() {
@@ -9,24 +9,26 @@ export default function Cart() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleRemoveItem = (id) => {
-        dispatch(removeFromCart(id));
+    const handleRemoveItem = (id, size) => {
+        dispatch(removeFromCart({ id, size })); // Gọi removeFromCart với cả ID và size
     };
 
-    const handleUpdateQuantity = (id, newQuantity) => {
+    const handleUpdateQuantity = (id, size, newQuantity) => {
         if (newQuantity > 0) {
-            dispatch(updateQuantity({ id, quantity: newQuantity }));
+            dispatch(updateQuantity({ id, size, quantity: newQuantity })); // Cập nhật số lượng dựa trên cả ID và size
         }
     };
 
     const handleCheckoutClick = () => {
-        navigate('/checkout'); // Chỉ điều hướng đến trang thanh toán, không reset giỏ hàng tại đây
+        navigate('/checkout');
     };
 
     const totalPrice = items.reduce((total, item) => total + item.price * item.quantity, 0);
 
     return (
-        <div className="min-h-screen bg-white text-black p-8">
+        <div className="min-h-screen bg-white text-black p-8"
+             style={{ backgroundColor: 'rgba(248, 247, 245, 1)' }}
+        >
             <h1 className="text-3xl font-light uppercase tracking-widest mb-12">Shopping Bag</h1>
             {items.length === 0 ? (
                 <>
@@ -41,7 +43,7 @@ export default function Cart() {
                 <div>
                     <div className="space-y-8">
                         {items.map((item) => (
-                            <div key={item.id} className="flex items-center border-b border-gray-200 pb-6">
+                            <div key={`${item.id}-${item.size}`} className="flex items-center border-b border-gray-200 pb-6">
                                 <img
                                     src={item.productImage}
                                     alt={item.productName}
@@ -51,16 +53,17 @@ export default function Cart() {
                                 <div className="flex-grow">
                                     <h2 className="text-lg font-medium mb-2 uppercase">{item.productName}</h2>
                                     <p className="text-sm text-gray-600 mb-4">${item.price.toFixed(2)}</p>
+                                    <p className="text-sm text-gray-600 mb-4">Size: {item.size}</p>
                                     <div className="flex items-center">
                                         <button
-                                            onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
+                                            onClick={() => handleUpdateQuantity(item.id, item.size, item.quantity - 1)}
                                             className="text-gray-500 hover:text-black transition-colors"
                                         >
                                             <Minus size={16} />
                                         </button>
                                         <span className="mx-4 text-sm">{item.quantity}</span>
                                         <button
-                                            onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
+                                            onClick={() => handleUpdateQuantity(item.id, item.size, item.quantity + 1)}
                                             className="text-gray-500 hover:text-black transition-colors"
                                         >
                                             <Plus size={16} />
@@ -68,7 +71,7 @@ export default function Cart() {
                                     </div>
                                 </div>
                                 <button
-                                    onClick={() => handleRemoveItem(item.id)}
+                                    onClick={() => handleRemoveItem(item.id, item.size)}
                                     className="text-gray-500 hover:text-black transition-colors"
                                 >
                                     <X size={20} />

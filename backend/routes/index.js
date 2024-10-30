@@ -61,7 +61,7 @@ router.post('/create-order', authToken, createOrder);
 router.get('/orders', authToken, getAllOrders);
 
 // Route để cập nhật trạng thái đơn hàng (yêu cầu xác thực)
-router.patch('/orders/:orderId/status', authToken, updateOrderStatus);
+router.patch('/orders/:orderId/status', updateOrderStatus);
 
 // Tạo đơn hàng PayPal
 router.post('/paypal/create-order', createPaypalOrderController);

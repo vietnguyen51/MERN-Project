@@ -1,11 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// Hàm để lưu giỏ hàng vào localStorage
 const saveCartToLocalStorage = (cartItems) => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
 };
 
-// Hàm để lấy giỏ hàng từ localStorage
 const getCartFromLocalStorage = () => {
     const savedCart = localStorage.getItem('cartItems');
     return savedCart ? JSON.parse(savedCart) : [];
@@ -14,32 +12,32 @@ const getCartFromLocalStorage = () => {
 const cartSlice = createSlice({
     name: 'cart',
     initialState: {
-        items: getCartFromLocalStorage(), // Khởi tạo state từ localStorage
+        items: getCartFromLocalStorage(),
     },
     reducers: {
         addToCart: (state, action) => {
-            const existingItem = state.items.find(item => item.id === action.payload.id);
+            const existingItem = state.items.find(item => item.id === action.payload.id && item.size === action.payload.size);
             if (existingItem) {
                 existingItem.quantity += 1;
             } else {
                 state.items.push({ ...action.payload, quantity: 1 });
             }
-            saveCartToLocalStorage(state.items); // Lưu lại giỏ hàng vào localStorage
+            saveCartToLocalStorage(state.items);
         },
         removeFromCart: (state, action) => {
-            state.items = state.items.filter(item => item.id !== action.payload);
-            saveCartToLocalStorage(state.items); // Lưu lại giỏ hàng vào localStorage
+            state.items = state.items.filter(item => !(item.id === action.payload.id && item.size === action.payload.size));
+            saveCartToLocalStorage(state.items);
         },
         updateQuantity: (state, action) => {
-            const item = state.items.find(item => item.id === action.payload.id);
+            const item = state.items.find(item => item.id === action.payload.id && item.size === action.payload.size);
             if (item) {
                 item.quantity = action.payload.quantity;
             }
-            saveCartToLocalStorage(state.items); // Lưu lại giỏ hàng vào localStorage
+            saveCartToLocalStorage(state.items);
         },
         resetCart: (state) => {
-            state.items = []; // Đặt lại giỏ hàng về rỗng
-            saveCartToLocalStorage(state.items); // Cập nhật localStorage
+            state.items = [];
+            saveCartToLocalStorage(state.items);
         },
     },
 });

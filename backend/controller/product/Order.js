@@ -1,20 +1,23 @@
-const Product = require('../../models/productModel');
 const Order = require('../../models/orderModel');
+const Product = require("../../models/productModel");
 
 const createOrderController = async (req, res) => {
     try {
         const { fullName, phoneNumber, address, city, paymentMethod, items, totalPrice } = req.body;
+        const userId = req.userId; // userId từ authToken middleware
 
-        // Kiểm tra từng item có chứa productImage không
-        const populatedItems = items.map((item) => ({
+        // Populate items với thông tin sản phẩm cần thiết
+        const populatedItems = items.map(item => ({
             productId: item.productId,
             productName: item.productName,
-            productImage: item.productImage,  // Lưu ảnh sản phẩm
+            size: item.size, // Sử dụng trường size thay vì sizes
             quantity: item.quantity,
             price: item.price,
         }));
 
+        // Tạo đơn hàng mới
         const newOrder = new Order({
+            userId,  // Liên kết với user
             fullName,
             phoneNumber,
             address,
@@ -32,6 +35,5 @@ const createOrderController = async (req, res) => {
         res.status(500).json({ message: 'Error placing order', success: false });
     }
 };
-
 
 module.exports = createOrderController;

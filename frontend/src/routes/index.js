@@ -23,7 +23,7 @@ import About from "../pages/About";
 import Sustainability from "../pages/Sustainability";
 import Careers from "../pages/Careers"
 import ShippingReturns from "../pages/ShippingReturns";
-import MyOrders from "../components/MyOrders";
+import MyPurchases from "../pages/MyPurchases";
 
 const router = createBrowserRouter([
   {
@@ -79,8 +79,8 @@ const router = createBrowserRouter([
         element: <Cart />,
       },
       {
-        path: "my-orders", // Trang giỏ hàng
-        element: <MyOrders />,
+        path: "my-purchases",
+        element: <MyPurchases />,
       },
       {
         path: "checkout", // Trang thanh toán

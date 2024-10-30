@@ -176,7 +176,9 @@ export default function Header() {
                       <ChevronDown size={16} className={scrolled ? 'text-black' : 'text-white'}/>
                     </button>
                     {isUserMenuOpen && (
-                        <div className="absolute right-0 mt-2 w-48 bg-white text-black shadow-lg z-50">
+                        <div className="absolute right-0 mt-2 w-48 bg-white text-black shadow-lg z-50"
+                             style={{backgroundColor: 'rgba(248, 247, 245, 1)'}}
+                        >
                           {user?.role === ROLE.ADMIN && (
                               <Link
                                   to="/admin-panel/all-users"
@@ -186,19 +188,20 @@ export default function Header() {
                                 Admin Panel
                               </Link>
                           )}
+                          <Link to="/my-purchases">
                           <button
-                              onClick={() => navigate('/my-orders')}
                               className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
                           >
-                            My Orders
+                            My Purchase
                           </button>
+                          </Link>
                           <button
                               onClick={handleLogout}
                               className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+
                           >
                             Logout
                           </button>
-
                         </div>
                     )}
                   </div>
@@ -229,7 +232,9 @@ export default function Header() {
             onMouseEnter={() => setActiveDropdown(activeDropdown)} // Giữ menu mở khi di chuột vào dropdown
             onMouseLeave={() => setActiveDropdown(null)} // Đóng khi rời khỏi dropdown
         >
-          <div className="container mx-auto px-4 py-8">
+          <div className="container mx-auto px-4 py-8"
+               style={{backgroundColor: 'rgba(248, 247, 245, 1)'}}
+          >
             <div className="grid grid-cols-5 gap-8">
               {activeDropdown && categories[activeDropdown].map((category) => (
                   <div key={category.id}>

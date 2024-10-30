@@ -87,18 +87,13 @@ const SummaryApi = {
       url: `${backendDomain}/api/categories`,
       method: "get",
     },
-    getByGender: (gender) => ({
-      url: `${backendDomain}/api/categories/gender/${gender}`,
-      method: "get",
-    }),
-    getByProductType: (type) => ({
-      url: `${backendDomain}/api/categories/type/${type}`,
-      method: "get",
-    }),
-    getBySubCategory: (gender, subCategory) => ({
-      url: `${backendDomain}/api/categories/${gender}/${subCategory}`,
-      method: "get",
-    }),
+
+    updateOrderStatus: {
+      url: (orderId) => `${backendDomain}/api/orders/${orderId}/status`,
+      method: "patch"
+    },
+
+
   },
 };
 

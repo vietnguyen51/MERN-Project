@@ -49,6 +49,7 @@ export default function Checkout() {
             items: cartItems.map(item => ({
                 productId: item.id || item._id,
                 productName: item.productName,
+                size: item.size, // Đảm bảo truyền size
                 quantity: item.quantity,
                 price: item.price,
             })),
@@ -108,7 +109,9 @@ export default function Checkout() {
 
 
     return (
-        <div className="min-h-screen bg-white text-black flex justify-center items-center p-4">
+        <div className="min-h-screen bg-white text-black flex justify-center items-center p-4"
+
+        >
             <div className="max-w-3xl w-full bg-white shadow-lg p-8" style={{ minHeight: '80vh' }}>
                 <h1 className="text-3xl font-light uppercase tracking-widest mb-12 text-center">Checkout</h1>
                 <form onSubmit={handleCheckout}>
@@ -122,6 +125,7 @@ export default function Checkout() {
                                         <div>
                                             <h3 className="font-medium">{item.productName}</h3>
                                             <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
+                                            <p className="text-sm text-gray-600">Size: {item.size}</p>
                                             <p className="text-sm">${(item.price * item.quantity).toFixed(2)}</p>
                                         </div>
                                     </div>
@@ -154,6 +158,7 @@ export default function Checkout() {
                                     placeholder="Phone Number"
                                     className="w-full p-2 border border-gray-300 rounded"
                                     required
+                                    pattern="^[0-9]{10}$"
                                 />
                                 <input
                                     type="text"
